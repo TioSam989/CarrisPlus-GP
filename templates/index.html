@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="hero">
+    <h2>Welcome to CarrisPlus</h2>
+    <p>Simplifying document submission and management online</p>
+    
+    <div class="services">
+        <div class="service-card">
+            <h3>Submit Documents</h3>
+            <p>Upload and submit your documents online</p>
+            <a href="{{ url_for('submit_document') }}" class="btn">Get Started</a>
+        </div>
+        
+        <div class="service-card">
+            <h3>Renew Documents</h3>
+            <p>Request renewals for your existing documents</p>
+            <a href="{{ url_for('renew_document') }}" class="btn">Renew Now</a>
+        </div>
+        
+        <div class="service-card">
+            <h3>Create Pass</h3>
+            <p>Generate new passes and permits</p>
+            <a href="{{ url_for('create_pass') }}" class="btn">Create Pass</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
