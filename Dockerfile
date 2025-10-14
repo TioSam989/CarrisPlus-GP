@@ -21,8 +21,10 @@ COPY requirements.txt .
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy application code
-COPY . .
+# Copy application files individually to avoid permission issues
+COPY app.py .
+COPY templates/ ./templates/
+COPY static/ ./static/
 
 # Create uploads directory for document handling
 RUN mkdir -p uploads

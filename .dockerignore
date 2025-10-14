@@ -23,3 +23,5 @@ coverage.xml
 .DS_Store
 .vscode
 .idea
+run_local.bat
+*.bat
