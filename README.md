@@ -32,14 +32,6 @@ A comprehensive online platform that digitizes the entire document submission pr
 - **Containerization:** Docker & Docker Compose
 - **Version Control:** Git
 
-## 💻 System Requirements
-
-### Minimum Requirements
-- **OS:** Windows 10/11, macOS 10.15+, or Linux
-- **RAM:** 4GB minimum, 8GB recommended
-- **Storage:** 2GB free space
-- **Internet:** Stable connection for Docker image downloads
-
 ### Required Software
 - Docker Desktop (includes Docker Compose)
 - Git (optional, for cloning repository)
@@ -60,13 +52,6 @@ A comprehensive online platform that digitizes the entire document submission pr
    docker --version
    docker-compose --version
    ```
-
-#### macOS:
-1. Download Docker Desktop for Mac
-2. Drag Docker to Applications folder
-3. Launch Docker Desktop
-4. Grant necessary permissions
-5. Verify installation in Terminal
 
 #### Linux (Ubuntu/Debian):
 ```bash
