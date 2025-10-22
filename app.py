@@ -12,8 +12,25 @@ os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 def index():
     return render_template('index.html')
 
-@app.route('/submit-document')
+@app.route('/submit-document', methods=['GET', 'POST'])
 def submit_document():
+    if request.method == 'POST':
+        # Handle file upload
+        if 'document_file' not in request.files:
+            flash('No file selected')
+            return redirect(request.url)
+        
+        file = request.files['document_file']
+        if file.filename == '':
+            flash('No file selected')
+            return redirect(request.url)
+        
+        if file:
+            filename = file.filename
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            flash('Document submitted successfully!')
+            return redirect(url_for('index'))
+    
     return render_template('submit_document.html')
 
 @app.route('/renew-document')
