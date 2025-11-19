@@ -14,7 +14,9 @@
       "Bash(docker-compose down:*)",
       "Bash(docker system prune:*)",
       "Bash(docker-compose build:*)",
-      "Bash(docker ps:*)"
+      "Bash(docker ps:*)",
+      "Bash(docker-compose restart:*)",
+      "Bash(curl:*)"
     ],
     "deny": [],
     "ask": []

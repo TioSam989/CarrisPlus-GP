@@ -12,22 +12,20 @@ import time
 app = Flask(__name__)
 
 # CORS configuration - Allow React frontend
-CORS(app, resources={
-    r"/api/*": {
-        "origins": [
-            "http://localhost:3000",
-            "http://frontend:3000",
-            "https://carris-plus-gp.vercel.app",
-            "https://carris-plus-gp-tiosam989.vercel.app",
-            "https://*.vercel.app",
-            "https://*.onrender.com"
-        ],
-        "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-        "allow_headers": ["Content-Type", "Authorization"],
-        "expose_headers": ["Content-Type", "Authorization"],
-        "supports_credentials": True
-    }
-})
+CORS(app,
+    origins=[
+        "http://localhost:3000",
+        "http://frontend:3000",
+        "https://carris-plus-gp.vercel.app",
+        "https://carris-plus-gp-tiosam989.vercel.app",
+        "https://*.vercel.app",
+        "https://*.onrender.com"
+    ],
+    methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allow_headers=["Content-Type", "Authorization"],
+    expose_headers=["Content-Type", "Authorization"],
+    supports_credentials=True
+)
 
 # Configuration
 app.config['SECRET_KEY'] = os.getenv('JWT_SECRET_KEY', 'your-super-secret-jwt-key-change-in-production')
