@@ -140,13 +140,50 @@ const Register = () => {
                     <form onSubmit={handleSubmit} className="auth-form">
                         <div className="form-field">
                             <input
+                                type="text"
+                                name="full_name"
+                                value={formData.full_name}
+                                onChange={handleChange}
+                                placeholder="Nome Completo"
+                                disabled={loading}
+                                required
+                            />
+                        </div>
+
+                        <div className="form-field">
+                            <input
                                 type="email"
                                 name="email"
                                 value={formData.email}
                                 onChange={handleChange}
-                                placeholder="Email / Contribuinte"
+                                placeholder="Email"
                                 disabled={loading}
                                 required
+                            />
+                        </div>
+
+                        <div className="form-field">
+                            <input
+                                type="text"
+                                name="nif"
+                                value={formData.nif}
+                                onChange={handleChange}
+                                placeholder="NIF (9 dígitos)"
+                                disabled={loading}
+                                required
+                                maxLength="9"
+                                pattern="\d{9}"
+                            />
+                        </div>
+
+                        <div className="form-field">
+                            <input
+                                type="tel"
+                                name="phone"
+                                value={formData.phone}
+                                onChange={handleChange}
+                                placeholder="Telefone (opcional)"
+                                disabled={loading}
                             />
                         </div>
 
@@ -156,7 +193,7 @@ const Register = () => {
                                 name="password"
                                 value={formData.password}
                                 onChange={handleChange}
-                                placeholder="Senha"
+                                placeholder="Senha (mín. 8 caracteres)"
                                 disabled={loading}
                                 required
                                 minLength="8"
