@@ -10,7 +10,11 @@
       "Bash(timeout:*)",
       "Bash(docker logs:*)",
       "Bash(docker exec:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(docker-compose down:*)",
+      "Bash(docker system prune:*)",
+      "Bash(docker-compose build:*)",
+      "Bash(docker ps:*)"
     ],
     "deny": [],
     "ask": []
