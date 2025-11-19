@@ -1,28 +1,82 @@
+version: '3.8'
+
 services:
-  web:
-    build: .
+  # MySQL Database
+  db:
+    image: mysql:8.0
+    container_name: carrisplus_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: carrisplus
+      MYSQL_USER: carrisplus_user
+      MYSQL_PASSWORD: carrisplus_pass
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  # Flask Backend API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: carrisplus_backend
+    restart: always
     ports:
       - "5000:5000"
-    volumes:
-      - .:/app
-      - uploads:/app/uploads
     environment:
-      - FLASK_ENV=development
-      - FLASK_DEBUG=1
-    restart: unless-stopped
-    
-  # Optional: Add database service if needed later
-  # db:
-  #   image: postgres:15
-  #   environment:
-  #     POSTGRES_DB: carrisplus
-  #     POSTGRES_USER: user
-  #     POSTGRES_PASSWORD: password
-  #   volumes:
-  #     - postgres_data:/var/lib/postgresql/data
-  #   ports:
-  #     - "5432:5432"
+      FLASK_APP: app.py
+      FLASK_ENV: development
+      DATABASE_URL: mysql+pymysql://carrisplus_user:carrisplus_pass@db:3306/carrisplus
+      JWT_SECRET_KEY: your-super-secret-jwt-key-change-in-production
+      UPLOAD_FOLDER: /app/uploads
+    volumes:
+      - ./backend:/app
+      - upload_data:/app/uploads
+    depends_on:
+      db:
+        condition: service_healthy
+
+  # React Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: carrisplus_frontend
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      REACT_APP_API_URL: http://localhost:5000
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    stdin_open: true
+    tty: true
+
+  # phpMyAdmin - Database Management Interface
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: carrisplus_phpmyadmin
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: carrisplus_user
+      PMA_PASSWORD: carrisplus_pass
+      MYSQL_ROOT_PASSWORD: rootpassword
+    depends_on:
+      - db
 
 volumes:
-  uploads:
-  # postgres_data:
+  mysql_data:
+  upload_data:

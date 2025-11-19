@@ -1,0 +1,2229 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarrisPlus - Documentação Técnica</title>
+    <style>
+        @media print {
+            @page {
+                size: A4;
+                margin: 2cm;
+            }
+
+            h1 {
+                page-break-before: always;
+            }
+
+            h1:first-of-type {
+                page-break-before: avoid;
+            }
+
+            table {
+                page-break-inside: avoid;
+            }
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.8;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background-color: #fff;
+        }
+
+        /* Cover page */
+        .cover {
+            text-align: center;
+            padding: 100px 0;
+            page-break-after: always;
+        }
+
+        .cover h1 {
+            font-size: 3em;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            border: none;
+        }
+
+        .cover .subtitle {
+            font-size: 1.5em;
+            color: #7f8c8d;
+            margin-bottom: 40px;
+        }
+
+        .cover .team {
+            margin-top: 80px;
+            font-size: 1.1em;
+        }
+
+        /* Headers */
+        h1 {
+            color: #2c3e50;
+            border-bottom: 4px solid #3498db;
+            padding-bottom: 15px;
+            margin-top: 60px;
+            margin-bottom: 30px;
+            font-size: 2.2em;
+        }
+
+        h2 {
+            color: #2980b9;
+            border-bottom: 2px solid #bdc3c7;
+            padding-bottom: 10px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        h3 {
+            color: #34495e;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+
+        h4 {
+            color: #555;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        /* Paragraphs */
+        p {
+            margin: 15px 0;
+            text-align: justify;
+        }
+
+        /* Lists */
+        ul, ol {
+            margin: 20px 0;
+            padding-left: 40px;
+        }
+
+        li {
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+
+        /* Tables */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 30px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            border: none;
+        }
+
+        td {
+            padding: 12px 15px;
+            border: 1px solid #e0e0e0;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        tr:hover {
+            background-color: #e3f2fd;
+        }
+
+        /* Code blocks */
+        code {
+            background-color: #f4f4f4;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', Consolas, monospace;
+            font-size: 0.9em;
+            color: #e74c3c;
+        }
+
+        pre {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 25px 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        pre code {
+            background-color: transparent;
+            padding: 0;
+            color: #ecf0f1;
+            font-size: 0.95em;
+        }
+
+        /* Blockquotes */
+        blockquote {
+            border-left: 5px solid #3498db;
+            padding-left: 20px;
+            margin: 25px 0;
+            font-style: italic;
+            color: #555;
+            background-color: #ecf8ff;
+            padding: 15px 20px;
+            border-radius: 0 5px 5px 0;
+        }
+
+        /* Strong text */
+        strong {
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        /* Horizontal rules */
+        hr {
+            border: none;
+            border-top: 3px solid #ecf0f1;
+            margin: 50px 0;
+        }
+
+        /* Status badges */
+        .status {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .status-complete {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .status-pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .status-blocked {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Print button */
+        .print-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1em;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .print-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        @media print {
+            .print-button {
+                display: none;
+            }
+        }
+
+        /* Emoji and icons */
+        .emoji {
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <button class="print-button" onclick="window.print()">🖨️ Imprimir / Salvar PDF</button>
+
+    <div class="cover">
+        <h1>🚌 CarrisPlus</h1>
+        <div class="subtitle">Sistema de Gestão de Documentos Online</div>
+        <div class="subtitle" style="font-size: 1.2em;">Documentação Técnica Completa</div>
+
+        <div class="team">
+            <p><strong>Equipa de Desenvolvimento:</strong></p>
+            <p>Davi (2024301) • Iago (2024195) • Ana (2024184)</p>
+        </div>
+
+        <div style="margin-top: 80px; color: #7f8c8d;">
+            <p>Projeto Académico - Engenharia Informática</p>
+            <p>Ano Letivo 2024/2025</p>
+        </div>
+    </div>
+
+    # CarrisPlus - Documentação Técnica do Projeto
+<h2>Technical Project Documentation</h2>
+
+<strong>Projeto Académico - Engenharia Informática</strong>
+
+---
+
+<h2>Informação do Projeto / Project Information</h2>
+
+<strong>Nome do Projeto:</strong> CarrisPlus - Sistema de Gestão de Documentos Online
+
+<strong>Instituição:</strong> [Nome da Instituição]
+
+<strong>Curso:</strong> Engenharia Informática
+
+<strong>Ano Letivo:</strong> 2024/2025
+
+<h3>Equipa de Desenvolvimento / Development Team</h3>
+
+| Nome | Número de Estudante | Papel |
+|------|-------------------|-------|
+| Davi | 2024301 | Desenvolvedor Full-Stack |
+| Iago | 2024195 | Desenvolvedor Backend |
+| Ana  | 2024184 | Desenvolvedora Frontend |
+
+---
+
+<h2>1. RESUMO EXECUTIVO / EXECUTIVE SUMMARY</h2>
+
+<h3>1.1 Visão Geral do Projeto</h3>
+
+O CarrisPlus é uma plataforma web inovadora desenvolvida para modernizar e digitalizar o processo de submissão de documentos e gestão de passes da Carris, a empresa municipal de transportes públicos de Lisboa. O sistema visa eliminar a necessidade de deslocações físicas aos balcões de atendimento, permitindo que os cidadãos realizem todo o processo de forma online, com validação automática através de Inteligência Artificial.
+
+CarrisPlus is an innovative web platform developed to modernize and digitize the document submission and pass management process for Carris, Lisbon's municipal public transport company. The system aims to eliminate the need for physical travel to service counters, allowing citizens to complete the entire process online with automatic validation through Artificial Intelligence.
+
+<h3>1.2 Contexto e Motivação</h3>
+
+<h4>Problema Identificado</h4>
+
+Atualmente, os cidadãos que necessitam de criar ou renovar passes da Carris enfrentam diversos desafios:
+
+1. <strong>Deslocação Obrigatória:</strong> Necessidade de se deslocar fisicamente aos postos de atendimento
+2. <strong>Tempo de Espera:</strong> Longas filas para tarefas administrativas simples
+3. <strong>Horário Limitado:</strong> Dependência dos horários de funcionamento dos balcões
+4. <strong>Constrangimentos:</strong> Dificuldades para pessoas com mobilidade reduzida ou falta de tempo
+5. <strong>Processamento Manual:</strong> Validação manual de documentos é lenta e propensa a erros
+
+<h4>Impacto Social</h4>
+
+O problema afeta especialmente:
+- Idosos com mobilidade reduzida
+- Trabalhadores com horários rígidos
+- Estudantes com horários escolares
+- Pessoas em áreas remotas de Lisboa
+- População em geral durante períodos de pandemia ou emergência
+
+<h3>1.3 Solução Proposta</h3>
+
+O CarrisPlus oferece uma solução digital completa que permite:
+
+1. <strong>Submissão Online de Documentos:</strong> Upload digital de documentos necessários (CC, Passaporte, Atestados, etc.)
+2. <strong>Criação de Passes:</strong> Pedido de novos passes sem sair de casa
+3. <strong>Renovação Automática:</strong> Sistema de renovação de passes existentes
+4. <strong>Validação Inteligente:</strong> Verificação automática de dados usando IA e OCR
+5. <strong>Acompanhamento em Tempo Real:</strong> Status do pedido disponível 24/7
+
+<h4>Diferencial Tecnológico</h4>
+
+- <strong>OCR Avançado:</strong> Extração automática de dados dos documentos
+- <strong>Validação de NIF:</strong> Verificação cruzada com base de dados
+- <strong>Matching Inteligente:</strong> Comparação de nomes e dados pessoais
+- <strong>Deteção de Fraude:</strong> Identificação de documentos suspeitos
+- <strong>Interface Acessível:</strong> Design responsivo e intuitivo
+
+<h3>1.4 Objetivos do Projeto</h3>
+
+<h4>Objetivos Primários</h4>
+1. Reduzir o tempo médio de processamento de pedidos em 70%
+2. Eliminar 90% das deslocações físicas desnecessárias
+3. Disponibilizar o serviço 24 horas por dia, 7 dias por semana
+4. Processar documentos com precisão de 95%+ através de IA
+
+<h4>Objetivos Secundários</h4>
+1. Melhorar a experiência do utilizador
+2. Reduzir custos operacionais da Carris
+3. Criar um sistema escalável e seguro
+4. Estabelecer base para futuras integrações com outros serviços municipais
+
+---
+
+<h2>2. REQUISITOS FUNCIONAIS / FUNCTIONAL REQUIREMENTS</h2>
+
+<h3>RF-001: Gestão de Utilizadores</h3>
+
+<h4>RF-001.1 - Registo de Utilizador</h4>
+<strong>Descrição:</strong> O sistema deve permitir que novos utilizadores se registem na plataforma.
+
+<strong>Prioridade:</strong> Alta
+
+<strong>Entradas:</strong>
+- Nome completo
+- Email
+- NIF (Número de Identificação Fiscal)
+- Palavra-passe
+- Confirmação de palavra-passe
+- Número de telefone (opcional)
+
+<strong>Processamento:</strong>
+1. Validar formato do email
+2. Verificar se email já existe
+3. Validar formato do NIF (9 dígitos)
+4. Verificar força da palavra-passe (mínimo 8 caracteres, maiúsculas, minúsculas, números)
+5. Criar hash seguro da palavra-passe (bcrypt)
+6. Enviar email de confirmação
+
+<strong>Saídas:</strong>
+- Conta criada com sucesso
+- Email de confirmação enviado
+- Mensagem de erro se dados inválidos
+
+<strong>Critérios de Aceitação:</strong>
+- ✓ Utilizador consegue criar conta com dados válidos
+- ✓ Sistema rejeita emails duplicados
+- ✓ NIF é validado segundo algoritmo português
+- ✓ Palavra-passe é armazenada com hash seguro
+- ✓ Email de confirmação é enviado em menos de 30 segundos
+
+<strong>Status Atual:</strong> 🚧 Não Implementado
+
+---
+
+<h4>RF-001.2 - Login de Utilizador</h4>
+<strong>Descrição:</strong> O sistema deve permitir que utilizadores registados façam login.
+
+<strong>Prioridade:</strong> Alta
+
+<strong>Entradas:</strong>
+- Email
+- Palavra-passe
+
+<strong>Processamento:</strong>
+1. Verificar se email existe
+2. Comparar hash da palavra-passe
+3. Verificar se conta está ativa
+4. Criar sessão segura
+5. Registar log de acesso
+
+<strong>Saídas:</strong>
+- Sessão iniciada
+- Redirecionamento para dashboard
+- Token de autenticação (JWT)
+
+<strong>Critérios de Aceitação:</strong>
+- ✓ Login bem-sucedido com credenciais válidas
+- ✓ Mensagem de erro com credenciais inválidas
+- ✓ Proteção contra força bruta (máximo 5 tentativas)
+- ✓ Sessão expira após 24 horas de inatividade
+
+<strong>Status Atual:</strong> 🚧 Não Implementado
+
+---
+
+<h4>RF-001.3 - Recuperação de Palavra-passe</h4>
+<strong>Descrição:</strong> O sistema deve permitir recuperação de palavra-passe via email.
+
+<strong>Prioridade:</strong> Média
+
+<strong>Status Atual:</strong> 🚧 Não Implementado
+
+---
+
+<h4>RF-001.4 - Gestão de Perfil</h4>
+<strong>Descrição:</strong> Utilizador pode visualizar e editar seus dados pessoais.
+
+<strong>Prioridade:</strong> Média
+
+<strong>Status Atual:</strong> 🚧 Não Implementado
+
+---
+
+<h3>RF-002: Submissão de Documentos</h3>
+
+<h4>RF-002.1 - Upload de Documento</h4>
+<strong>Descrição:</strong> O sistema deve permitir upload de documentos digitalizados.
+
+<strong>Prioridade:</strong> Alta
+
+<strong>Entradas:</strong>
+- Ficheiro (PDF, JPG, PNG)
+- Tipo de documento (dropdown)
+- Notas adicionais (opcional)
+
+<strong>Processamento:</strong>
+1. Validar formato do ficheiro (magic bytes)
+2. Verificar tamanho máximo (5MB)
+3. Gerar nome único para ficheiro
+4. Armazenar em diretório seguro
+5. Criar registo na base de dados
+6. Atribuir status "Pendente"
+
+<strong>Saídas:</strong>
+- Documento submetido com sucesso
+- Número de protocolo gerado
+- Confirmação visual
+
+<strong>Regras de Negócio:</strong>
+- Tamanho máximo: 5MB por ficheiro
+- Formatos aceites: PDF, JPG, JPEG, PNG
+- Resolução mínima: 300 DPI (recomendado)
+- Máximo de 3 ficheiros por submissão
+
+<strong>Critérios de Aceitação:</strong>
+- ✓ Upload bem-sucedido com formatos válidos
+- ✓ Rejeição de ficheiros muito grandes
+- ✓ Rejeição de formatos não permitidos
+- ✓ Geração de número de protocolo único
+- ✓ Feedback visual do progresso de upload
+
+<strong>Status Atual:</strong> ✅ Parcialmente Implementado
+- Upload funcional
+- Validação básica de formato
+- ⚠️ Falta validação de tamanho
+- ⚠️ Falta validação de magic bytes
+- ⚠️ Falta geração de protocolo
+
+---
+
+<h4>RF-002.2 - Validação Automática de Documento</h4>
+<strong>Descrição:</strong> O sistema deve validar automaticamente documentos submetidos usando IA.
+
+<strong>Prioridade:</strong> Alta
+
+<strong>Entradas:</strong>
+- Ficheiro de documento
+- Tipo de documento declarado
+- Dados do utilizador
+
+<strong>Processamento:</strong>
+1. <strong>Extração OCR:</strong>
+   - Aplicar OCR ao documento
+   - Extrair texto estruturado
+   - Identificar campos-chave (Nome, NIF, Data)
+
+2. <strong>Validação de Dados:</strong>
+   - Comparar nome extraído vs. nome no registo
+   - Validar NIF extraído vs. NIF do utilizador
+   - Verificar data de validade do documento
+   - Validar formato e estrutura do documento
+
+3. <strong>Verificação de Autenticidade:</strong>
+   - Análise de qualidade da imagem
+   - Deteção de adulterações
+   - Verificação de elementos de segurança (se aplicável)
+
+4. <strong>Scoring de Confiança:</strong>
+   - Calcular score de confiança (0-100%)
+   - Determinar se aprovação automática ou revisão manual
+
+<strong>Saídas:</strong>
+- Status: Aprovado / Rejeitado / Revisão Manual
+- Score de confiança
+- Lista de discrepâncias encontradas
+- Dados extraídos estruturados
+
+<strong>Regras de Negócio:</strong>
+- Score > 90%: Aprovação automática
+- Score 70-90%: Revisão manual
+- Score < 70%: Rejeição automática com motivo
+
+<strong>Critérios de Aceitação:</strong>
+- ✓ OCR extrai dados com 95%+ de precisão
+- ✓ Validação de NIF funciona corretamente
+- ✓ Matching de nomes aceita variações (ex: "João Silva" = "Joao Silva")
+- ✓ Sistema identifica documentos vencidos
+- ✓ Tempo de processamento < 10 segundos
+
+<strong>Status Atual:</strong> 🚧 Não Implementado
+
+---
+
+<h4>RF-002.3 - Histórico de Documentos</h4>
+<strong>Descrição:</strong> Utilizador pode visualizar todos os documentos submetidos.
+
+<strong>Prioridade:</strong> Média
+
+<strong>Entradas:</strong>
+- Utilizador autenticado
+
+<strong>Saídas:</strong>
+- Lista de documentos
+- Data de submissão
+- Status atual
+- Ações disponíveis (visualizar, download)
+
+<strong>Status Atual:</strong> 🚧 Não Implementado
+
+---
+
+<h3>RF-003: Gestão de Passes</h3>
+
+<h4>RF-003.1 - Criação de Novo Passe</h4>
+<strong>Descrição:</strong> O sistema deve permitir criação de novos passes da Carris.
+
+<strong>Prioridade:</strong> Alta
+
+<strong>Entradas:</strong>
+- Tipo de passe (Normal, Estudante, Social, Sénior)
+- Zona tarifária
+- Documentos comprovativos
+- Foto tipo passe (opcional)
+
+<strong>Processamento:</strong>
+1. Validar documentos necessários para tipo de passe
+2. Calcular preço baseado em zona e tipo
+3. Validar condições especiais (idade para sénior, certificado para estudante)
+4. Gerar passe provisório
+5. Enviar para validação
+
+<strong>Saídas:</strong>
+- Passe criado (status: Pendente)
+- Número do passe
+- Data estimada de ativação
+- Comprovante em PDF
+
+<strong>Regras de Negócio:</strong>
+
+<strong>Passe Estudante:</strong>
+- Requer: Certificado de matrícula válido
+- Idade: 4-23 anos
+- Renovação anual obrigatória
+
+<strong>Passe Sénior:</strong>
+- Idade: 65+ anos
+- Desconto: 40%
+- Documento: Cartão de Cidadão
+
+<strong>Passe Social:</strong>
+- Requer: Declaração de rendimentos
+- Rendimento máximo: 1.5x IAS
+- Renovação semestral
+
+<strong>Critérios de Aceitação:</strong>
+- ✓ Criação bem-sucedida com documentos válidos
+- ✓ Cálculo correto de preço
+- ✓ Validação automática de condições
+- ✓ Geração de PDF com comprovante
+
+<strong>Status Atual:</strong> 🚧 Não Implementado
+
+---
+
+<h4>RF-003.2 - Renovação de Passe</h4>
+<strong>Descrição:</strong> Renovação de passes existentes.
+
+<strong>Prioridade:</strong> Alta
+
+<strong>Status Atual:</strong> 🚧 Não Implementado
+
+---
+
+<h4>RF-003.3 - Consulta de Passe</h4>
+<strong>Descrição:</strong> Visualização de detalhes do passe ativo.
+
+<strong>Prioridade:</strong> Média
+
+<strong>Status Atual:</strong> 🚧 Não Implementado
+
+---
+
+<h3>RF-004: Painel de Administração</h3>
+
+<h4>RF-004.1 - Dashboard Administrativo</h4>
+<strong>Descrição:</strong> Painel para administradores visualizarem estatísticas.
+
+<strong>Prioridade:</strong> Média
+
+<strong>Informações Exibidas:</strong>
+- Documentos pendentes de revisão
+- Total de documentos processados (dia/semana/mês)
+- Taxa de aprovação automática
+- Passes ativos
+- Utilizadores registados
+- Gráficos de tendências
+
+<strong>Status Atual:</strong> 🚧 Não Implementado
+
+---
+
+<h4>RF-004.2 - Revisão Manual de Documentos</h4>
+<strong>Descrição:</strong> Interface para revisão de documentos sinalizados.
+
+<strong>Prioridade:</strong> Alta
+
+<strong>Funcionalidades:</strong>
+- Visualização de documento original
+- Dados extraídos pelo OCR
+- Score de confiança
+- Discrepâncias identificadas
+- Ações: Aprovar / Rejeitar / Solicitar novo documento
+- Campo para comentários
+
+<strong>Status Atual:</strong> 🚧 Não Implementado
+
+---
+
+<h4>RF-004.3 - Gestão de Utilizadores</h4>
+<strong>Descrição:</strong> Administradores podem gerenciar contas de utilizadores.
+
+<strong>Funcionalidades:</strong>
+- Listagem de utilizadores
+- Busca e filtros
+- Desativar/Ativar contas
+- Resetar palavra-passe
+- Ver histórico de atividades
+
+<strong>Status Atual:</strong> 🚧 Não Implementado
+
+---
+
+<h3>RF-005: Notificações</h3>
+
+<h4>RF-005.1 - Notificações por Email</h4>
+<strong>Descrição:</strong> Sistema envia emails automáticos para eventos importantes.
+
+<strong>Prioridade:</strong> Alta
+
+<strong>Eventos de Notificação:</strong>
+1. Confirmação de registo
+2. Documento submetido com sucesso
+3. Documento aprovado
+4. Documento rejeitado (com motivo)
+5. Passe ativado
+6. Passe próximo do vencimento (30 dias antes)
+7. Recuperação de palavra-passe
+
+<strong>Template de Email:</strong>
+- Logo da Carris
+- Mensagem personalizada
+- Call-to-action (botão)
+- Informações de contato
+- Footer com links úteis
+
+<strong>Status Atual:</strong> 🚧 Não Implementado
+
+---
+
+<h4>RF-005.2 - Notificações In-App</h4>
+<strong>Descrição:</strong> Notificações dentro da plataforma.
+
+<strong>Prioridade:</strong> Baixa
+
+<strong>Status Atual:</strong> 🚧 Não Implementado
+
+---
+
+<h3>RF-006: Relatórios e Exportação</h3>
+
+<h4>RF-006.1 - Geração de Relatórios</h4>
+<strong>Descrição:</strong> Sistema gera relatórios para administradores.
+
+<strong>Prioridade:</strong> Baixa
+
+<strong>Tipos de Relatórios:</strong>
+- Documentos processados por período
+- Taxa de aprovação vs. rejeição
+- Tempo médio de processamento
+- Passes criados por tipo
+- Utilizadores ativos
+
+<strong>Formatos de Exportação:</strong>
+- PDF
+- Excel (XLSX)
+- CSV
+
+<strong>Status Atual:</strong> 🚧 Não Implementado
+
+---
+
+<h3>RF-007: API REST</h3>
+
+<h4>RF-007.1 - API para Integrações</h4>
+<strong>Descrição:</strong> API RESTful para integrações externas.
+
+<strong>Prioridade:</strong> Baixa
+
+<strong>Endpoints Principais:</strong>
+- `POST /api/v1/documents` - Submeter documento
+- `GET /api/v1/documents/{id}` - Consultar status
+- `GET /api/v1/passes/{user_id}` - Listar passes
+- `POST /api/v1/passes` - Criar passe
+
+<strong>Autenticação:</strong> JWT Bearer Token
+
+<strong>Status Atual:</strong> 🚧 Não Implementado
+
+---
+
+<h2>3. REQUISITOS NÃO-FUNCIONAIS / NON-FUNCTIONAL REQUIREMENTS</h2>
+
+<h3>RNF-001: Performance</h3>
+
+<h4>RNF-001.1 - Tempo de Resposta</h4>
+<strong>Descrição:</strong> O sistema deve responder rapidamente às ações do utilizador.
+
+<strong>Prioridade:</strong> Alta
+
+<strong>Requisitos:</strong>
+- Carregamento de página: < 2 segundos
+- Upload de documento: < 5 segundos (ficheiro 5MB)
+- Processamento OCR: < 10 segundos
+- Consultas à base de dados: < 500ms
+- API endpoints: < 1 segundo
+
+<strong>Métricas:</strong>
+- 95% das requisições devem cumprir os tempos acima
+- Medição com ferramentas: Google Lighthouse, Apache JMeter
+
+<strong>Status:</strong> ⚠️ Não testado
+
+---
+
+<h4>RNF-001.2 - Escalabilidade</h4>
+<strong>Descrição:</strong> O sistema deve suportar crescimento de utilizadores.
+
+<strong>Requisitos:</strong>
+- Suportar 1.000 utilizadores simultâneos
+- Processar 10.000 documentos por dia
+- Crescimento horizontal via containerização
+- Load balancing preparado
+
+<strong>Estratégias:</strong>
+- Docker Compose para múltiplas instâncias
+- Redis para cache
+- CDN para assets estáticos
+- Database connection pooling
+
+<strong>Status:</strong> 🚧 Parcialmente preparado (Docker ready)
+
+---
+
+<h4>RNF-001.3 - Disponibilidade</h4>
+<strong>Descrição:</strong> O sistema deve estar disponível 24/7.
+
+<strong>Requisitos:</strong>
+- Uptime: 99.5% (downtime máximo: 3.65 horas/mês)
+- Backup automático diário
+- Plano de recuperação de desastres
+- Monitorização contínua
+
+<strong>Status:</strong> 🚧 Não implementado
+
+---
+
+<h3>RNF-002: Segurança</h3>
+
+<h4>RNF-002.1 - Autenticação e Autorização</h4>
+<strong>Descrição:</strong> Acesso seguro e controlado ao sistema.
+
+<strong>Requisitos:</strong>
+- Autenticação via email/password
+- Hash de passwords com bcrypt (salt rounds: 12)
+- Tokens JWT com expiração (24h)
+- Renovação automática de tokens
+- Roles: User, Admin, SuperAdmin
+
+<strong>Proteções:</strong>
+- Rate limiting: máximo 5 tentativas de login
+- Bloqueio temporário após falhas (15 minutos)
+- Logout automático após inatividade (30 minutos)
+
+<strong>Status:</strong> 🚧 Não implementado
+
+---
+
+<h4>RNF-002.2 - Proteção de Dados</h4>
+<strong>Descrição:</strong> Dados sensíveis devem ser protegidos.
+
+<strong>Requisitos:</strong>
+- HTTPS obrigatório (TLS 1.3)
+- Encriptação de dados sensíveis em repouso (AES-256)
+- Sanitização de inputs
+- Proteção contra SQL Injection (ORM)
+- Proteção contra XSS
+- CSRF tokens em formulários
+- Content Security Policy headers
+
+<strong>Compliance:</strong>
+- RGPD (GDPR) - Regulamento Geral de Proteção de Dados
+- Política de privacidade clara
+- Consentimento explícito
+- Direito ao esquecimento
+
+<strong>Status:</strong> ⚠️ Parcial (HTTPS ready, mas sem encriptação implementada)
+
+---
+
+<h4>RNF-002.3 - Segurança de Ficheiros</h4>
+<strong>Descrição:</strong> Upload de ficheiros deve ser seguro.
+
+<strong>Requisitos:</strong>
+- Validação de tipo via magic bytes (não apenas extensão)
+- Scan antivírus (ClamAV)
+- Armazenamento fora do webroot
+- Nomes de ficheiro sanitizados
+- Limites de tamanho enforçados
+- Isolamento de ficheiros por utilizador
+
+<strong>Status:</strong> ⚠️ Parcial (validação básica, sem antivírus)
+
+---
+
+<h4>RNF-002.4 - Auditoria e Logs</h4>
+<strong>Descrição:</strong> Todas as ações importantes devem ser registadas.
+
+<strong>Eventos Logged:</strong>
+- Login/Logout
+- Submissão de documentos
+- Aprovação/Rejeição
+- Alterações administrativas
+- Acessos não autorizados
+- Erros do sistema
+
+<strong>Informações Registadas:</strong>
+- Timestamp
+- User ID
+- IP Address
+- Ação realizada
+- Resultado (sucesso/falha)
+
+<strong>Retenção:</strong> 1 ano
+
+<strong>Status:</strong> 🚧 Não implementado
+
+---
+
+<h3>RNF-003: Usabilidade</h3>
+
+<h4>RNF-003.1 - Interface Intuitiva</h4>
+<strong>Descrição:</strong> Interface fácil de usar para todos os públicos.
+
+<strong>Requisitos:</strong>
+- Design limpo e minimalista
+- Navegação clara (máximo 3 cliques para qualquer função)
+- Feedback visual para todas as ações
+- Mensagens de erro claras e acionáveis
+- Ajuda contextual disponível
+
+<strong>Acessibilidade:</strong>
+- Conformidade com WCAG 2.1 Level AA
+- Suporte a leitores de tela
+- Contraste adequado (mínimo 4.5:1)
+- Navegação por teclado
+- Tamanho de fonte ajustável
+
+<strong>Status:</strong> ✅ Parcialmente implementado (design básico funcional)
+
+---
+
+<h4>RNF-003.2 - Responsividade</h4>
+<strong>Descrição:</strong> Funcionar em todos os dispositivos.
+
+<strong>Requisitos:</strong>
+- Desktop (1920x1080 e superiores)
+- Tablet (768x1024)
+- Mobile (375x667 e superiores)
+- Touch-friendly (botões mínimo 44x44px)
+
+<strong>Browsers Suportados:</strong>
+- Chrome 90+
+- Firefox 88+
+- Safari 14+
+- Edge 90+
+
+<strong>Status:</strong> ✅ Implementado (CSS Grid responsivo)
+
+---
+
+<h4>RNF-003.3 - Multilíngue</h4>
+<strong>Descrição:</strong> Suporte a múltiplos idiomas.
+
+<strong>Idiomas:</strong>
+- Português (PT-PT) - Principal
+- Inglês (EN-GB) - Secundário
+
+<strong>Status:</strong> 🚧 Não implementado (conteúdo em PT/EN misturado)
+
+---
+
+<h3>RNF-004: Manutenibilidade</h3>
+
+<h4>RNF-004.1 - Código Limpo</h4>
+<strong>Descrição:</strong> Código deve ser fácil de manter.
+
+<strong>Requisitos:</strong>
+- Padrões PEP 8 (Python)
+- Comentários em código complexo
+- Docstrings em todas as funções
+- Nomes de variáveis descritivos
+- Funções pequenas (< 50 linhas)
+- DRY (Don't Repeat Yourself)
+
+<strong>Status:</strong> ⚠️ Parcial (código funcional mas falta documentação)
+
+---
+
+<h4>RNF-004.2 - Testes</h4>
+<strong>Descrição:</strong> Código deve ser testado.
+
+<strong>Requisitos:</strong>
+- Cobertura de testes: mínimo 80%
+- Testes unitários (pytest)
+- Testes de integração
+- Testes end-to-end (Selenium)
+- CI/CD pipeline
+
+<strong>Status:</strong> 🚧 Não implementado
+
+---
+
+<h4>RNF-004.3 - Documentação</h4>
+<strong>Descrição:</strong> Projeto deve estar bem documentado.
+
+<strong>Documentos:</strong>
+- README.md completo ✅
+- API documentation (Swagger)
+- Manual do utilizador
+- Manual do administrador
+- Diagramas de arquitetura
+
+<strong>Status:</strong> ⚠️ Parcial (README completo, resto em falta)
+
+---
+
+<h3>RNF-005: Compatibilidade</h3>
+
+<h4>RNF-005.1 - Containerização</h4>
+<strong>Descrição:</strong> Aplicação deve rodar em containers.
+
+<strong>Requisitos:</strong>
+- Docker image otimizada (< 500MB)
+- Docker Compose para orquestração
+- Variáveis de ambiente configuráveis
+- Volumes para persistência
+
+<strong>Status:</strong> ✅ Implementado
+
+---
+
+<h4>RNF-005.2 - Base de Dados</h4>
+<strong>Descrição:</strong> Suporte a diferentes ambientes.
+
+<strong>Requisitos:</strong>
+- PostgreSQL para produção
+- SQLite para desenvolvimento
+- Migrations com Alembic
+- Seed data para testes
+
+<strong>Status:</strong> 🚧 Preparado mas não implementado
+
+---
+
+<h3>RNF-006: Legal e Compliance</h3>
+
+<h4>RNF-006.1 - RGPD/GDPR</h4>
+<strong>Descrição:</strong> Conformidade com proteção de dados.
+
+<strong>Requisitos:</strong>
+- Consentimento explícito para recolha de dados
+- Política de privacidade visível
+- Direito ao esquecimento
+- Portabilidade de dados
+- Notificação de violações (72h)
+
+<strong>Status:</strong> 🚧 Não implementado
+
+---
+
+<h4>RNF-006.2 - Termos de Serviço</h4>
+<strong>Descrição:</strong> Termos claros de utilização.
+
+<strong>Conteúdo:</strong>
+- Condições de uso
+- Responsabilidades
+- Limitações de responsabilidade
+- Política de cookies
+
+<strong>Status:</strong> 🚧 Não implementado
+
+---
+
+<h2>4. ARQUITETURA DO SISTEMA / SYSTEM ARCHITECTURE</h2>
+
+<h3>4.1 Visão Geral</h3>
+
+O CarrisPlus utiliza uma arquitetura em camadas (Layered Architecture) com separação clara de responsabilidades:
+
+<pre><code>
+┌─────────────────────────────────────────────────────────────┐
+│                     PRESENTATION LAYER                       │
+│                   (HTML + CSS + JavaScript)                  │
+├─────────────────────────────────────────────────────────────┤
+│                     APPLICATION LAYER                        │
+│                    (Flask Routes + Logic)                    │
+├─────────────────────────────────────────────────────────────┤
+│                   AI VALIDATION LAYER                        │
+│                (OCR + NIF Validation + Matching)             │
+├─────────────────────────────────────────────────────────────┤
+│                      DATA ACCESS LAYER                       │
+│                   (SQLAlchemy ORM + Models)                  │
+├─────────────────────────────────────────────────────────────┤
+│                       DATABASE LAYER                         │
+│                        (PostgreSQL)                          │
+└─────────────────────────────────────────────────────────────┘
+<pre><code>
+
+<h3>4.2 Componentes Principais</h3>
+
+<h4>4.2.1 Frontend (Presentation Layer)</h4>
+- <strong>Tecnologia:</strong> HTML5, CSS3, JavaScript ES6+
+- <strong>Framework CSS:</strong> Custom CSS Grid
+- <strong>Template Engine:</strong> Jinja2
+- <strong>Responsabilidades:</strong>
+  - Renderização de interface
+  - Validação de formulários (client-side)
+  - Feedback visual ao utilizador
+  - Upload de ficheiros
+
+<h4>4.2.2 Backend (Application Layer)</h4>
+- <strong>Framework:</strong> Flask 2.3.3
+- <strong>Linguagem:</strong> Python 3.11
+- <strong>Padrão:</strong> MVC (Model-View-Controller)
+- <strong>Responsabilidades:</strong>
+  - Roteamento de requisições
+  - Lógica de negócio
+  - Validação de dados (server-side)
+  - Gestão de sessões
+  - Autenticação e autorização
+
+<h4>4.2.3 AI Validation Layer</h4>
+- <strong>OCR:</strong> pytesseract + OpenCV
+- <strong>ML Framework:</strong> TensorFlow ou PyTorch
+- <strong>Responsabilidades:</strong>
+  - Extração de texto de documentos
+  - Validação de NIF
+  - Matching de nomes
+  - Deteção de fraudes
+  - Scoring de confiança
+
+<h4>4.2.4 Data Access Layer</h4>
+- <strong>ORM:</strong> SQLAlchemy
+- <strong>Migrations:</strong> Alembic
+- <strong>Responsabilidades:</strong>
+  - Abstração de acesso a dados
+  - Queries otimizadas
+  - Transações
+  - Relacionamentos entre entidades
+
+<h4>4.2.5 Database Layer</h4>
+- <strong>SGBD:</strong> PostgreSQL 15+
+- <strong>Responsabilidades:</strong>
+  - Armazenamento persistente
+  - Integridade referencial
+  - Índices e otimizações
+  - Backups
+
+<h3>4.3 Modelo de Dados</h3>
+
+<h4>Entidades Principais</h4>
+
+<strong>User (Utilizador)</strong>
+<pre><code>
+- id: UUID (PK)
+- email: String (unique)
+- password_hash: String
+- nif: String (9 digits, unique)
+- full_name: String
+- phone: String (optional)
+- created_at: DateTime
+- updated_at: DateTime
+- is_active: Boolean
+- is_admin: Boolean
+<pre><code>
+
+<strong>Document (Documento)</strong>
+</code></pre>
+- id: UUID (PK)
+- user_id: UUID (FK -> User)
+- document_type: Enum (CC, PASSPORT, CERTIFICATE, etc.)
+- file_path: String
+- original_filename: String
+- file_size: Integer
+- upload_date: DateTime
+- status: Enum (PENDING, APPROVED, REJECTED, REVIEW)
+- confidence_score: Float
+- validated_at: DateTime
+- validated_by: UUID (FK -> User) [nullable]
+- rejection_reason: Text [nullable]
+<pre><code>
+
+<strong>Pass (Passe)</strong>
+</code></pre>
+- id: UUID (PK)
+- user_id: UUID (FK -> User)
+- pass_type: Enum (NORMAL, STUDENT, SENIOR, SOCIAL)
+- zone: String
+- start_date: Date
+- end_date: Date
+- status: Enum (ACTIVE, EXPIRED, PENDING, CANCELLED)
+- price: Decimal
+- created_at: DateTime
+<pre><code>
+
+<strong>ValidationLog (Log de Validação)</strong>
+</code></pre>
+- id: UUID (PK)
+- document_id: UUID (FK -> Document)
+- extracted_data: JSON
+- discrepancies: JSON
+- confidence_score: Float
+- processing_time: Float (seconds)
+- created_at: DateTime
+<pre><code>
+
+<strong>AuditLog (Log de Auditoria)</strong>
+</code></pre>
+- id: UUID (PK)
+- user_id: UUID (FK -> User) [nullable]
+- action: String
+- entity_type: String
+- entity_id: UUID
+- ip_address: String
+- user_agent: String
+- created_at: DateTime
+<pre><code>
+
+<h4>Diagrama de Relacionamentos</h4>
+
+</code></pre>
+User (1) ──────< (N) Document
+  │
+  └──────< (N) Pass
+  │
+  └──────< (N) AuditLog
+
+Document (1) ──────< (N) ValidationLog
+<pre><code>
+
+<h3>4.4 Fluxo de Dados</h3>
+
+<h4>Submissão de Documento</h4>
+
+<pre><code>
+[Utilizador]
+    ↓ Upload ficheiro
+[Frontend] - Validação client-side
+    ↓ POST /submit-document
+[Flask Route] - Validação server-side
+    ↓ Salvar ficheiro
+[File Storage]
+    ↓ Criar registo
+[Database] ← Status: PENDING
+    ↓ Processar
+[AI Validation Layer]
+    ├─ OCR → Extrair texto
+    ├─ NIF → Validar número
+    ├─ Name → Comparar com BD
+    └─ Scoring → Calcular confiança
+    ↓ Resultado
+[Database] ← Atualizar status
+    ↓ Email
+[User] ← Notificação
+<pre><code>
+
+<h3>4.5 Segurança da Arquitetura</h3>
+
+<strong>Camadas de Segurança:</strong>
+
+1. <strong>Network Layer:</strong> HTTPS/TLS 1.3
+2. <strong>Application Layer:</strong>
+   - CSRF tokens
+   - Input sanitization
+   - Rate limiting
+3. <strong>Authentication Layer:</strong>
+   - JWT tokens
+   - bcrypt hashing
+4. <strong>Data Layer:</strong>
+   - SQL injection prevention (ORM)
+   - Prepared statements
+5. <strong>Storage Layer:</strong>
+   - Encrypted files at rest
+   - Access control lists
+
+---
+
+<h2>5. TECNOLOGIAS E FERRAMENTAS / TECHNOLOGIES AND TOOLS</h2>
+
+<h3>5.1 Stack Tecnológico Completo</h3>
+
+<h4>Backend</h4>
+| Tecnologia | Versão | Propósito |
+|------------|--------|-----------|
+| Python | 3.11 | Linguagem principal |
+| Flask | 2.3.3 | Web framework |
+| SQLAlchemy | 2.0+ | ORM |
+| Alembic | 1.12+ | Database migrations |
+| Flask-Login | 0.6+ | Session management |
+| Flask-CORS | 4.0+ | Cross-origin requests |
+| bcrypt | 4.1+ | Password hashing |
+| PyJWT | 2.8+ | JWT tokens |
+| python-dotenv | 1.0.0 | Environment variables |
+
+<h4>AI/ML Processing</h4>
+| Tecnologia | Versão | Propósito |
+|------------|--------|-----------|
+| pytesseract | 0.3+ | OCR engine |
+| OpenCV | 4.8+ | Image processing |
+| Pillow | 10.0.1 | Image manipulation |
+| TensorFlow | 2.14+ | ML framework (opcional) |
+| NumPy | 1.24+ | Numerical computing |
+
+<h4>Database</h4>
+| Tecnologia | Versão | Propósito |
+|------------|--------|-----------|
+| PostgreSQL | 15+ | Database principal |
+| psycopg2 | 2.9+ | PostgreSQL adapter |
+| Redis | 7.2+ | Cache + message broker |
+
+<h4>Frontend</h4>
+| Tecnologia | Versão | Propósito |
+|------------|--------|-----------|
+| HTML5 | - | Markup |
+| CSS3 | - | Styling |
+| JavaScript | ES6+ | Client-side logic |
+| Jinja2 | 3.1.2 | Template engine |
+
+<h4>DevOps</h4>
+| Tecnologia | Versão | Propósito |
+|------------|--------|-----------|
+| Docker | 24.0+ | Containerization |
+| Docker Compose | 2.20+ | Container orchestration |
+| Git | 2.40+ | Version control |
+| GitHub | - | Code repository |
+| Nginx | 1.25+ | Reverse proxy (produção) |
+
+<h4>Testing</h4>
+| Tecnologia | Versão | Propósito |
+|------------|--------|-----------|
+| pytest | 7.4+ | Unit testing |
+| pytest-cov | 4.1+ | Coverage |
+| Selenium | 4.15+ | E2E testing |
+| Postman | - | API testing |
+
+<h4>Monitoring & Logging</h4>
+| Tecnologia | Versão | Propósito |
+|------------|--------|-----------|
+| Sentry | 1.38+ | Error tracking |
+| ELK Stack | 8.11+ | Logging (opcional) |
+
+<h3>5.2 Justificativas das Escolhas</h3>
+
+<h4>Por que Flask?</h4>
+- ✓ Lightweight e flexível
+- ✓ Excelente documentação
+- ✓ Grande comunidade
+- ✓ Fácil integração com Python ML libraries
+- ✓ Adequado para projeto académico
+
+<h4>Por que PostgreSQL?</h4>
+- ✓ Open source e gratuito
+- ✓ ACID compliant
+- ✓ Suporte a JSON
+- ✓ Escalável
+- ✓ Excelente integração com Python/SQLAlchemy
+
+<h4>Por que Docker?</h4>
+- ✓ Ambiente consistente (dev = prod)
+- ✓ Fácil setup para equipa
+- ✓ Isolamento de dependências
+- ✓ Facilita deployment
+
+---
+
+<h2>6. IMPLEMENTAÇÃO ATUAL / CURRENT IMPLEMENTATION</h2>
+
+<h3>6.1 Funcionalidades Implementadas</h3>
+
+✅ <strong>Totalmente Implementado:</strong>
+1. Estrutura base do projeto
+2. Containerização Docker completa
+3. Interface web responsiva
+4. Upload de documentos (básico)
+5. Sistema de rotas Flask
+
+<h3>6.2 Estrutura de Ficheiros</h3>
+
+<pre><code>
+CarrisPlus-GP/
+│
+├── app.py                      # Aplicação Flask principal (45 linhas)
+│
+├── requirements.txt            # Dependências Python
+│
+├── Dockerfile                  # Container configuration
+├── docker-compose.yml          # Orchestration
+├── .dockerignore               # Docker exclusions
+│
+├── templates/                  # Templates Jinja2
+│   ├── base.html              # ⚠️ CORROMPIDO (necessita correção)
+│   ├── index.html             # ✅ Homepage funcional
+│   ├── submit_document.html   # ✅ Formulário de submissão
+│   ├── renew_document.html    # ❌ EM FALTA
+│   └── create_pass.html       # ❌ EM FALTA
+│
+├── static/                     # Assets estáticos
+│   ├── css/
+│   │   └── style.css          # ✅ Estilos principais (94 linhas)
+│   └── js/
+│       └── main.js            # ✅ JavaScript básico (16 linhas)
+│
+├── uploads/                    # Armazenamento de documentos
+│
+└── README.md                   # ✅ Documentação completa
+<pre><code>
+
+<h3>6.3 Estado dos Componentes</h3>
+
+| Componente | Status | Completude | Notas |
+|------------|--------|------------|-------|
+| Docker Setup | ✅ Completo | 100% | Funcional |
+| Flask App | ⚠️ Parcial | 30% | Rotas básicas apenas |
+| Templates | ⚠️ Parcial | 60% | base.html corrompido, 2 em falta |
+| CSS | ✅ Funcional | 100% | Design responsivo OK |
+| JavaScript | ✅ Funcional | 100% | Funcionalidades básicas |
+| Database | ❌ Não iniciado | 0% | Comentado no docker-compose |
+| Authentication | ❌ Não iniciado | 0% | - |
+| AI/OCR | ❌ Não iniciado | 0% | - |
+| Admin Panel | ❌ Não iniciado | 0% | - |
+| Email System | ❌ Não iniciado | 0% | - |
+| Tests | ❌ Não iniciado | 0% | - |
+
+<strong>Progresso Global Estimado: 20-25%</strong>
+
+<h3>6.4 Problemas Conhecidos</h3>
+
+❌ <strong>Crítico:</strong>
+1. `base.html` corrompido (conteúdo substituído por "bfwubfyuefbvyu")
+2. Falta implementação de database
+3. Sem sistema de autenticação
+
+⚠️ <strong>Importante:</strong>
+1. Templates em falta (`renew_document.html`, `create_pass.html`)
+2. Validação de ficheiros insuficiente
+3. Secret key hardcoded
+4. Sem tratamento de erros
+
+📝 <strong>Melhorias:</strong>
+1. Adicionar testes
+2. Implementar logging
+3. Documentação inline do código
+
+---
+
+<h2>7. ROADMAP DE DESENVOLVIMENTO / DEVELOPMENT ROADMAP</h2>
+
+<h3>Fase 1: Correções e Fundação ⏱️ 1-2 semanas</h3>
+
+<strong>Prioridade: URGENTE</strong>
+
+- [x] ~~Setup inicial do projeto~~
+- [x] ~~Containerização Docker~~
+- [ ] <strong>Corrigir base.html corrompido</strong>
+- [ ] <strong>Criar templates em falta</strong>
+- [ ] Implementar .env para variáveis de ambiente
+- [ ] Adicionar validação robusta de ficheiros
+- [ ] Implementar tratamento de erros básico
+
+<strong>Deliverables:</strong>
+- Aplicação sem erros críticos
+- Todos os templates funcionais
+- Validação de upload segura
+
+---
+
+<h3>Fase 2: Database e Autenticação ⏱️ 2-3 semanas</h3>
+
+<strong>Prioridade: ALTA</strong>
+
+- [ ] Setup PostgreSQL
+- [ ] Criar models SQLAlchemy
+  - [ ] User model
+  - [ ] Document model
+  - [ ] Pass model
+  - [ ] ValidationLog model
+  - [ ] AuditLog model
+- [ ] Implementar migrations com Alembic
+- [ ] Sistema de registo de utilizadores
+- [ ] Sistema de login/logout
+- [ ] Recuperação de password
+- [ ] Gestão de sessões com Flask-Login
+- [ ] Hashing de passwords com bcrypt
+
+<strong>Deliverables:</strong>
+- Database funcional
+- Utilizadores podem registar-se e fazer login
+- Dados persistentes
+
+---
+
+<h3>Fase 3: Validação IA e OCR ⏱️ 3-4 semanas</h3>
+
+<strong>Prioridade: ALTA</strong>
+
+- [ ] Integrar pytesseract
+- [ ] Implementar processamento de imagem com OpenCV
+- [ ] Desenvolver módulo de extração de dados
+  - [ ] Extração de nome
+  - [ ] Extração de NIF
+  - [ ] Extração de datas
+- [ ] Implementar validação de NIF
+- [ ] Desenvolver algoritmo de matching de nomes
+- [ ] Sistema de scoring de confiança
+- [ ] Pipeline de validação automática
+- [ ] Testes com documentos reais
+
+<strong>Deliverables:</strong>
+- OCR funcional com 90%+ precisão
+- Validação automática de documentos
+- Sistema de scoring implementado
+
+---
+
+<h3>Fase 4: Gestão de Passes ⏱️ 2 semanas</h3>
+
+<strong>Prioridade: MÉDIA</strong>
+
+- [ ] Implementar criação de passes
+- [ ] Lógica de negócio para tipos de passe
+  - [ ] Passe Normal
+  - [ ] Passe Estudante
+  - [ ] Passe Sénior
+  - [ ] Passe Social
+- [ ] Validação de requisitos por tipo
+- [ ] Cálculo de preços
+- [ ] Geração de PDF com comprovante
+- [ ] Sistema de renovação
+- [ ] Histórico de passes
+
+<strong>Deliverables:</strong>
+- Utilizadores podem criar passes online
+- Validação automática de requisitos
+- PDFs gerados automaticamente
+
+---
+
+<h3>Fase 5: Painel Administrativo ⏱️ 2-3 semanas</h3>
+
+<strong>Prioridade: MÉDIA</strong>
+
+- [ ] Dashboard com estatísticas
+- [ ] Interface de revisão manual
+- [ ] Gestão de utilizadores
+- [ ] Sistema de aprovação/rejeição
+- [ ] Visualização de logs
+- [ ] Geração de relatórios
+- [ ] Exportação de dados (Excel, CSV)
+
+<strong>Deliverables:</strong>
+- Admin pode gerir todo o sistema
+- Revisão manual de documentos
+- Relatórios exportáveis
+
+---
+
+<h3>Fase 6: Notificações e Comunicação ⏱️ 1-2 semanas</h3>
+
+<strong>Prioridade: MÉDIA</strong>
+
+- [ ] Integrar Flask-Mail
+- [ ] Templates de email
+- [ ] Sistema de notificações automáticas
+- [ ] Configuração SMTP
+- [ ] Queue de emails com Celery + Redis
+- [ ] Histórico de notificações
+
+<strong>Deliverables:</strong>
+- Emails automáticos funcionais
+- Utilizadores sempre informados
+
+---
+
+<h3>Fase 7: Segurança e Compliance ⏱️ 2 semanas</h3>
+
+<strong>Prioridade: ALTA</strong>
+
+- [ ] Implementar CSRF protection
+- [ ] Rate limiting
+- [ ] Content Security Policy
+- [ ] Sanitização completa de inputs
+- [ ] Scan antivírus (ClamAV)
+- [ ] Audit logging completo
+- [ ] Política de privacidade (RGPD)
+- [ ] Termos de serviço
+- [ ] Cookie consent
+
+<strong>Deliverables:</strong>
+- Sistema seguro e em conformidade
+- RGPD compliant
+
+---
+
+<h3>Fase 8: Testes e Qualidade ⏱️ 2 semanas</h3>
+
+<strong>Prioridade: MÉDIA</strong>
+
+- [ ] Testes unitários (pytest)
+- [ ] Testes de integração
+- [ ] Testes E2E (Selenium)
+- [ ] Cobertura mínima 80%
+- [ ] CI/CD pipeline (GitHub Actions)
+- [ ] Code linting (flake8, black)
+- [ ] Performance testing
+
+<strong>Deliverables:</strong>
+- Cobertura de testes > 80%
+- CI/CD automático
+- Código limpo e padronizado
+
+---
+
+<h3>Fase 9: API REST ⏱️ 1-2 semanas</h3>
+
+<strong>Prioridade: BAIXA</strong>
+
+- [ ] Endpoints RESTful
+- [ ] Autenticação JWT
+- [ ] Documentação Swagger
+- [ ] Rate limiting por API key
+- [ ] Versionamento (v1)
+
+<strong>Deliverables:</strong>
+- API pública documentada
+- Integrações possíveis
+
+---
+
+<h3>Fase 10: Deployment e Produção ⏱️ 1 semana</h3>
+
+<strong>Prioridade: ALTA (quando projeto completo)</strong>
+
+- [ ] Setup servidor de produção
+- [ ] Nginx como reverse proxy
+- [ ] SSL/TLS certificates (Let's Encrypt)
+- [ ] Variáveis de ambiente de produção
+- [ ] Backup automático configurado
+- [ ] Monitoring (Sentry)
+- [ ] Logs centralizados
+- [ ] Performance tuning
+- [ ] Load testing
+
+<strong>Deliverables:</strong>
+- Aplicação em produção
+- Monitorização ativa
+- Backups automáticos
+
+---
+
+<strong>Tempo Total Estimado: 16-22 semanas (~4-5 meses)</strong>
+
+---
+
+<h2>8. CASOS DE USO / USE CASES</h2>
+
+<h3>UC-001: Registar Novo Utilizador</h3>
+
+<strong>Ator Principal:</strong> Cidadão
+
+<strong>Pré-condições:</strong>
+- Utilizador não tem conta
+- Possui email válido e NIF
+
+<strong>Fluxo Principal:</strong>
+1. Utilizador acede à página de registo
+2. Preenche formulário (nome, email, NIF, password)
+3. Sistema valida dados
+4. Sistema cria conta
+5. Sistema envia email de confirmação
+6. Utilizador confirma email
+7. Conta ativada
+
+<strong>Fluxo Alternativo 3a - Email já existe:</strong>
+- Sistema exibe erro "Email já registado"
+- Oferece opção de recuperar password
+
+<strong>Fluxo Alternativo 3b - NIF inválido:</strong>
+- Sistema valida algoritmo do NIF
+- Exibe erro se inválido
+
+<strong>Pós-condições:</strong>
+- Conta criada e ativa
+- Utilizador pode fazer login
+
+---
+
+<h3>UC-002: Submeter Documento para Validação</h3>
+
+<strong>Ator Principal:</strong> Utilizador Autenticado
+
+<strong>Pré-condições:</strong>
+- Utilizador com login efetuado
+- Possui documento digitalizado
+
+<strong>Fluxo Principal:</strong>
+1. Utilizador acede a "Submeter Documento"
+2. Seleciona tipo de documento
+3. Faz upload do ficheiro
+4. Adiciona notas (opcional)
+5. Submete formulário
+6. Sistema valida ficheiro
+7. Sistema processa com OCR
+8. Sistema extrai dados
+9. Sistema valida NIF
+10. Sistema compara nome
+11. Sistema calcula score
+12. Se score > 90%: aprovação automática
+13. Sistema envia email de confirmação
+
+<strong>Fluxo Alternativo 6a - Ficheiro inválido:</strong>
+- Sistema rejeita upload
+- Exibe mensagem de erro
+
+<strong>Fluxo Alternativo 12a - Score 70-90%:</strong>
+- Documento enviado para revisão manual
+- Administrador notificado
+
+<strong>Fluxo Alternativo 12b - Score < 70%:</strong>
+- Documento rejeitado automaticamente
+- Utilizador notificado com motivo
+
+<strong>Pós-condições:</strong>
+- Documento armazenado
+- Status atualizado
+- Utilizador notificado
+
+---
+
+<h3>UC-003: Criar Novo Passe</h3>
+
+<strong>Ator Principal:</strong> Utilizador Autenticado
+
+<strong>Pré-condições:</strong>
+- Login efetuado
+- Documentos aprovados
+
+<strong>Fluxo Principal:</strong>
+1. Utilizador acede a "Criar Passe"
+2. Seleciona tipo de passe
+3. Seleciona zona tarifária
+4. Anexa documentos comprovativos
+5. Sistema valida requisitos
+6. Sistema calcula preço
+7. Utilizador confirma
+8. Sistema cria passe (status: PENDING)
+9. Sistema gera PDF provisório
+10. Sistema envia para aprovação
+11. Aprovação automática ou manual
+12. Sistema ativa passe
+13. Utilizador recebe email com comprovante
+
+<strong>Fluxo Alternativo 5a - Requisitos não cumpridos:</strong>
+- Sistema lista documentos em falta
+- Utilizador deve submeter documentos
+
+<strong>Fluxo Alternativo 11a - Aprovação manual:</strong>
+- Admin revisa pedido
+- Aprova ou rejeita
+
+<strong>Pós-condições:</strong>
+- Passe criado
+- PDF disponível para download
+- Utilizador notificado
+
+---
+
+<h3>UC-004: Renovar Passe Existente</h3>
+
+<strong>Ator Principal:</strong> Utilizador Autenticado
+
+<strong>Pré-condições:</strong>
+- Possui passe existente
+- Passe expira em < 60 dias
+
+<strong>Fluxo Principal:</strong>
+1. Sistema envia lembrete (30 dias antes)
+2. Utilizador acede a "Renovar Passe"
+3. Visualiza passe atual
+4. Confirma dados
+5. Atualiza documentos (se necessário)
+6. Sistema valida
+7. Sistema calcula novo preço
+8. Utilizador confirma
+9. Sistema renova passe
+10. Novo período de validade aplicado
+11. PDF atualizado gerado
+
+<strong>Pós-condições:</strong>
+- Passe renovado
+- Nova data de validade
+- Utilizador notificado
+
+---
+
+<h3>UC-005: Revisar Documento (Admin)</h3>
+
+<strong>Ator Principal:</strong> Administrador
+
+<strong>Pré-condições:</strong>
+- Login como admin
+- Existem documentos em REVIEW
+
+<strong>Fluxo Principal:</strong>
+1. Admin acede ao dashboard
+2. Visualiza lista de documentos pendentes
+3. Seleciona documento
+4. Visualiza:
+   - Imagem original
+   - Dados extraídos (OCR)
+   - Score de confiança
+   - Discrepâncias
+5. Analisa documento
+6. Decide: APROVAR ou REJEITAR
+7. Adiciona comentários (se rejeitado)
+8. Confirma decisão
+9. Sistema atualiza status
+10. Utilizador notificado
+
+<strong>Fluxo Alternativo 6a - Solicitar novo documento:</strong>
+- Admin solicita resubmissão
+- Utilizador notificado com motivo
+
+<strong>Pós-condições:</strong>
+- Documento processado
+- Status atualizado
+- Utilizador notificado
+- Log de auditoria criado
+
+---
+
+<h2>9. TESTES E VALIDAÇÃO / TESTING AND VALIDATION</h2>
+
+<h3>9.1 Estratégia de Testes</h3>
+
+<h4>Níveis de Teste</h4>
+
+<strong>1. Testes Unitários (Unit Tests)</strong>
+- Framework: pytest
+- Cobertura: Funções individuais
+- Objetivo: 80%+ code coverage
+- Execução: Automática em cada commit
+
+<strong>2. Testes de Integração</strong>
+- Framework: pytest + pytest-flask
+- Cobertura: Interação entre componentes
+- Foco: Database, API, OCR pipeline
+
+<strong>3. Testes End-to-End (E2E)</strong>
+- Framework: Selenium
+- Cobertura: Fluxos completos de utilizador
+- Browsers: Chrome, Firefox
+
+<strong>4. Testes de Performance</strong>
+- Framework: Apache JMeter
+- Métricas: Response time, throughput
+- Load testing: 1000 utilizadores simultâneos
+
+<strong>5. Testes de Segurança</strong>
+- OWASP ZAP
+- SQL Injection
+- XSS
+- CSRF
+
+<h3>9.2 Casos de Teste Principais</h3>
+
+<h4>TC-001: Registo de Utilizador</h4>
+
+| Caso | Input | Output Esperado | Status |
+|------|-------|-----------------|--------|
+| TC-001.1 | Dados válidos | Conta criada | 🚧 |
+| TC-001.2 | Email duplicado | Erro "Email já existe" | 🚧 |
+| TC-001.3 | NIF inválido | Erro "NIF inválido" | 🚧 |
+| TC-001.4 | Password fraca | Erro "Password insegura" | 🚧 |
+
+<h4>TC-002: Upload de Documento</h4>
+
+| Caso | Input | Output Esperado | Status |
+|------|-------|-----------------|--------|
+| TC-002.1 | PDF válido (2MB) | Upload sucesso | ✅ |
+| TC-002.2 | Ficheiro 10MB | Erro "Tamanho excedido" | 🚧 |
+| TC-002.3 | Ficheiro .exe | Erro "Formato inválido" | 🚧 |
+| TC-002.4 | JPG válido | Upload sucesso | ✅ |
+
+<h4>TC-003: Validação OCR</h4>
+
+| Caso | Input | Output Esperado | Status |
+|------|-------|-----------------|--------|
+| TC-003.1 | CC português | Nome + NIF extraídos corretamente | 🚧 |
+| TC-003.2 | Imagem borrada | Score baixo → Revisão manual | 🚧 |
+| TC-003.3 | NIF diferente | Detetar discrepância | 🚧 |
+
+<h3>9.3 Critérios de Aceitação</h3>
+
+<strong>Para Release em Produção:</strong>
+- ✓ Cobertura de testes > 80%
+- ✓ Zero bugs críticos
+- ✓ Todos os testes E2E passam
+- ✓ Performance: 95% requests < 2s
+- ✓ Security scan sem vulnerabilidades HIGH
+- ✓ RGPD compliant
+- ✓ Documentação completa
+
+---
+
+<h2>10. DEPLOYMENT E INFRAESTRUTURA / DEPLOYMENT AND INFRASTRUCTURE</h2>
+
+<h3>10.1 Ambientes</h3>
+
+<h4>Desenvolvimento (Development)</h4>
+- <strong>Servidor:</strong> Local (Docker)
+- <strong>Database:</strong> SQLite ou PostgreSQL local
+- <strong>Debug:</strong> Ativado
+- <strong>Logs:</strong> Console
+- <strong>URL:</strong> http://localhost:5000
+
+<h4>Homologação (Staging)</h4>
+- <strong>Servidor:</strong> Cloud VM
+- <strong>Database:</strong> PostgreSQL
+- <strong>Debug:</strong> Desativado
+- <strong>Logs:</strong> Ficheiro + Sentry
+- <strong>URL:</strong> https://staging.carrisplus.pt
+
+<h4>Produção (Production)</h4>
+- <strong>Servidor:</strong> Cloud VM (Alta disponibilidade)
+- <strong>Database:</strong> PostgreSQL com replicação
+- <strong>Debug:</strong> Desativado
+- <strong>Logs:</strong> Centralizado (ELK)
+- <strong>URL:</strong> https://carrisplus.pt
+- <strong>SSL:</strong> Let's Encrypt
+- <strong>Proxy:</strong> Nginx
+- <strong>Monitoring:</strong> Sentry + UptimeRobot
+
+<h3>10.2 Arquitetura de Deployment</h3>
+
+<pre><code>
+                    [INTERNET]
+                        │
+                        ▼
+                 [Load Balancer]
+                        │
+        ┌───────────────┼───────────────┐
+        ▼               ▼               ▼
+   [Nginx 1]       [Nginx 2]       [Nginx 3]
+        │               │               │
+        └───────────────┼───────────────┘
+                        ▼
+              [Flask App Cluster]
+           ┌────────┬────────┬────────┐
+           │ App 1  │ App 2  │ App 3  │
+           └────────┴────────┴────────┘
+                        │
+        ┌───────────────┼───────────────┐
+        ▼               ▼               ▼
+ [PostgreSQL]      [Redis]       [File Storage]
+  (Primary)        (Cache)          (S3/NAS)
+      │
+      ▼
+[PostgreSQL]
+ (Replica)
+<pre><code>
+
+<h3>10.3 CI/CD Pipeline</h3>
+
+</code></pre>
+[Developer]
+    │ git push
+    ▼
+[GitHub Repository]
+    │ webhook
+    ▼
+[GitHub Actions]
+    ├─ Lint code (flake8, black)
+    ├─ Run tests (pytest)
+    ├─ Security scan (bandit)
+    ├─ Build Docker image
+    ├─ Push to registry
+    └─ Deploy to staging
+    │
+    │ Manual approval
+    ▼
+[Deploy to Production]
+<pre><code>
+
+<h3>10.4 Backup Strategy</h3>
+
+<strong>Database:</strong>
+- Backup completo: Diariamente às 02:00
+- Backup incremental: A cada 6 horas
+- Retenção: 30 dias
+- Teste de restore: Semanalmente
+
+<strong>Files:</strong>
+- Sincronização em tempo real para storage redundante
+- Snapshot diário
+- Retenção: 90 dias
+
+---
+
+<h2>11. MANUTENÇÃO E SUPORTE / MAINTENANCE AND SUPPORT</h2>
+
+<h3>11.1 Procedimentos de Manutenção</h3>
+
+<strong>Atualizações de Segurança:</strong>
+- Patches críticos: Aplicados em 24h
+- Patches não-críticos: Aplicados semanalmente
+- Dependency updates: Mensalmente
+
+<strong>Monitorização:</strong>
+- Uptime monitoring (UptimeRobot)
+- Error tracking (Sentry)
+- Performance monitoring (New Relic ou similar)
+- Log analysis (ELK Stack)
+
+<strong>Alertas:</strong>
+- Downtime > 5 minutos → Email + SMS
+- Erro rate > 5% → Email
+- CPU > 80% por 10 min → Email
+- Disk space < 20% → Email
+
+<h3>11.2 Suporte aos Utilizadores</h3>
+
+<strong>Canais:</strong>
+- Email: suporte@carrisplus.pt
+- FAQ online
+- Chat (horário comercial)
+
+<strong>SLA (Service Level Agreement):</strong>
+- Resposta inicial: < 24h
+- Resolução crítica: < 48h
+- Resolução normal: < 5 dias
+
+---
+
+<h2>12. RISCOS E MITIGAÇÃO / RISKS AND MITIGATION</h2>
+
+<h3>Riscos Técnicos</h3>
+
+| Risco | Probabilidade | Impacto | Mitigação |
+|-------|---------------|---------|-----------|
+| OCR com baixa precisão | Média | Alto | Treino de modelo, fallback para revisão manual |
+| Database corruption | Baixa | Crítico | Backups frequentes, replicação |
+| Ataque DDoS | Média | Alto | CDN, rate limiting, Cloudflare |
+| Violação de dados | Baixa | Crítico | Encriptação, audits regulares, pen testing |
+
+<h3>Riscos de Projeto</h3>
+
+| Risco | Probabilidade | Impacto | Mitigação |
+|-------|---------------|---------|-----------|
+| Atraso no desenvolvimento | Alta | Médio | Priorização de features, MVP approach |
+| Mudança de requisitos | Média | Médio | Metodologia ágil, sprints curtos |
+| Indisponibilidade de membros | Média | Médio | Documentação completa, knowledge sharing |
+
+---
+
+<h2>13. CONCLUSÕES E PRÓXIMOS PASSOS / CONCLUSIONS AND NEXT STEPS</h2>
+
+<h3>13.1 Estado Atual do Projeto</h3>
+
+O CarrisPlus encontra-se em <strong>fase inicial de desenvolvimento</strong>, com aproximadamente <strong>25% de completude</strong>. A fundação técnica está estabelecida com:
+- Infraestrutura Docker funcional
+- Interface web responsiva básica
+- Sistema de upload de ficheiros
+
+Contudo, as funcionalidades core ainda não foram implementadas:
+- Sistema de autenticação
+- Base de dados
+- Validação IA/OCR
+- Gestão de passes completa
+
+<h3>13.2 Próximas Ações Imediatas</h3>
+
+<strong>Prioridade URGENTE (Próximas 2 semanas):</strong>
+1. <strong>Corrigir base.html corrompido</strong> - Recuperar template da versão anterior
+2. <strong>Criar templates em falta</strong> - renew_document.html, create_pass.html
+3. <strong>Implementar validação de ficheiros robusta</strong> - Magic bytes, tamanho, antivírus
+4. <strong>Setup PostgreSQL</strong> - Database funcional
+5. <strong>Criar models básicos</strong> - User, Document
+
+<strong>Prioridade ALTA (Próximo mês):</strong>
+1. Sistema de autenticação completo
+2. OCR e validação IA
+3. Lógica de criação de passes
+
+<h3>13.3 Viabilidade e Perspetivas</h3>
+
+O projeto é <strong>tecnicamente viável</strong> e tem potencial real de <strong>impacto social positivo</strong>. Com a equipa dedicada e seguindo o roadmap estabelecido, é possível atingir um MVP funcional em <strong>4-5 meses</strong>.
+
+<strong>Fatores de Sucesso:</strong>
+- Stack tecnológico bem escolhido
+- Problema real com impacto social
+- Arquitetura escalável
+- Roadmap bem definido
+
+<strong>Desafios:</strong>
+- Complexidade da validação IA
+- Compliance com RGPD
+- Garantia de segurança
+- Tempo limitado do projeto académico
+
+<h3>13.4 Valor Académico</h3>
+
+Este projeto demonstra:
+- ✓ Aplicação de <strong>conceitos de Engenharia de Software</strong>
+- ✓ Uso de <strong>tecnologias modernas</strong> (Flask, Docker, IA)
+- ✓ Resolução de <strong>problema real</strong>
+- ✓ Integração de <strong>múltiplas disciplinas</strong> (Web Dev, AI, Security, UX)
+- ✓ Trabalho em <strong>equipa</strong> com Git/GitHub
+
+---
+
+<h2>14. REFERÊNCIAS / REFERENCES</h2>
+
+<h3>Documentação Técnica</h3>
+
+1. <strong>Flask Documentation</strong> - https://flask.palletsprojects.com/
+2. <strong>PostgreSQL Documentation</strong> - https://www.postgresql.org/docs/
+3. <strong>Docker Documentation</strong> - https://docs.docker.com/
+4. <strong>pytesseract</strong> - https://github.com/madmaze/pytesseract
+5. <strong>OpenCV</strong> - https://docs.opencv.org/
+
+<h3>Normas e Compliance</h3>
+
+1. <strong>RGPD/GDPR</strong> - Regulamento Geral de Proteção de Dados
+2. <strong>WCAG 2.1</strong> - Web Content Accessibility Guidelines
+3. <strong>OWASP Top 10</strong> - Security Best Practices
+
+<h3>Inspiração</h3>
+
+1. <strong>Carris Website</strong> - https://www.carris.pt/
+2. <strong>Navegante Lisboa</strong> - Sistema de passes existente
+
+---
+
+<h2>15. ANEXOS / APPENDICES</h2>
+
+<h3>Anexo A: Glossário</h3>
+
+- <strong>NIF:</strong> Número de Identificação Fiscal (Portugal)
+- <strong>OCR:</strong> Optical Character Recognition
+- <strong>ORM:</strong> Object-Relational Mapping
+- <strong>RGPD:</strong> Regulamento Geral de Proteção de Dados
+- <strong>CC:</strong> Cartão de Cidadão
+- <strong>JWT:</strong> JSON Web Token
+- <strong>CSRF:</strong> Cross-Site Request Forgery
+- <strong>XSS:</strong> Cross-Site Scripting
+- <strong>SQL Injection:</strong> Vulnerabilidade de segurança
+
+<h3>Anexo B: Variáveis de Ambiente</h3>
+
+<pre><code>
+<h1>Flask</h1>
+FLASK_APP=app.py
+FLASK_ENV=production
+SECRET_KEY=<generate-secure-key>
+
+<h1>Database</h1>
+DATABASE_URL=postgresql://user:pass@host:5432/carrisplus
+DB_POOL_SIZE=10
+
+<h1>OCR</h1>
+TESSERACT_PATH=/usr/bin/tesseract
+OCR_LANGUAGE=por
+
+<h1>Email</h1>
+MAIL_SERVER=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=suporte@carrisplus.pt
+MAIL_PASSWORD=<secure-password>
+
+<h1>Security</h1>
+BCRYPT_LOG_ROUNDS=12
+JWT_SECRET_KEY=<generate-secure-key>
+JWT_EXPIRATION_HOURS=24
+
+<h1>File Upload</h1>
+MAX_UPLOAD_SIZE=5242880  # 5MB
+UPLOAD_FOLDER=/app/uploads
+
+<h1>Sentry</h1>
+SENTRY_DSN=<your-sentry-dsn>
+<pre><code>
+
+<h3>Anexo C: Comandos Úteis</h3>
+
+</code></pre>
+<h1>Development</h1>
+docker-compose up --build       # Start dev environment
+docker-compose down             # Stop containers
+docker-compose logs -f web      # View logs
+
+<h1>Database</h1>
+docker exec -it carrisplus-db psql -U carrisplus  # Access DB
+flask db init                   # Initialize migrations
+flask db migrate -m "message"   # Create migration
+flask db upgrade                # Apply migration
+
+<h1>Testing</h1>
+pytest                          # Run all tests
+pytest --cov=app                # Run with coverage
+pytest tests/unit               # Run specific folder
+
+<h1>Code Quality</h1>
+black .                         # Format code
+flake8 .                        # Lint code
+bandit -r app/                  # Security scan
+
+<h1>Production</h1>
+gunicorn -w 4 -b 0.0.0.0:5000 app:app  # Production server
+<pre><code>
+
+---
+
+<h2>INFORMAÇÃO DE DOCUMENTO / DOCUMENT INFORMATION</h2>
+
+<strong>Versão:</strong> 1.0
+
+<strong>Data:</strong> 2025-11-05
+
+<strong>Autores:</strong> Equipa CarrisPlus (Davi, Iago, Ana)
+
+<strong>Revisão:</strong> [Nome do Professor/Orientador]
+
+<strong>Próxima Revisão:</strong> [Data]
+
+---
+
+<strong>FIM DA DOCUMENTAÇÃO / END OF DOCUMENTATION</strong>
+
+---
+
+*Este documento está preparado para ser convertido em PDF profissional usando ferramentas como Pandoc, LaTeX, ou Microsoft Word. Recomenda-se adicionar:*
+- *Página de rosto com logotipo da instituição*
+- *Índice automático*
+- *Cabeçalhos e rodapés*
+- *Numeração de páginas*
+- *Diagramas coloridos para melhor visualização*
+
+<strong>Total de Páginas Estimado em PDF: 35-40 páginas</strong>
+
+
+</body>
+</html>
