@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { loginUser, clearError } from '../../store/authSlice';
+import Toast from '../Toast/Toast';
 import './Auth.css';
 
 const Login = () => {
@@ -9,10 +10,21 @@ const Login = () => {
         email: '',
         password: ''
     });
+    const [showToast, setShowToast] = useState(false);
+    const [toastMessage, setToastMessage] = useState('');
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const location = useLocation();
     const { loading, error, isLoggedIn } = useSelector((state) => state.auth);
+
+    useEffect(() => {
+        if (location.state?.message) {
+            setToastMessage(location.state.message);
+            setShowToast(true);
+            window.history.replaceState({}, document.title);
+        }
+    }, [location]);
 
     useEffect(() => {
         if (isLoggedIn) {
@@ -49,8 +61,16 @@ const Login = () => {
     };
 
     return (
-        <div className="auth-layout">
-            <div className="auth-left">
+        <>
+            {showToast && (
+                <Toast
+                    message={toastMessage}
+                    type="success"
+                    onClose={() => setShowToast(false)}
+                />
+            )}
+            <div className="auth-layout">
+                <div className="auth-left">
                 <div className="hero-content">
                     <h1 className="hero-title">
                         ADMINISTRE <span className="text-white">O</span> SEU<br />
@@ -148,6 +168,7 @@ const Login = () => {
                 </div>
             </div>
         </div>
+        </>
     );
 };
 

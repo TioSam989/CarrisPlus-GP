@@ -98,7 +98,7 @@ const Register = () => {
 
         try {
             await dispatch(registerUser(userData)).unwrap();
-            navigate('/dashboard');
+            navigate('/login', { state: { message: 'Conta criada com sucesso! Faça login para continuar.' } });
         } catch (err) {
             console.error('Registration failed:', err);
         }
