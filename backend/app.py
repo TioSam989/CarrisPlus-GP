@@ -21,7 +21,8 @@ CORS(app,
         "https://*.vercel.app",
         "https://*.onrender.com",
         "https://*.railway.app",
-        "https://healthcheck.railway.app"
+        "https://healthcheck.railway.app",
+        "https://frontend-production-006a.up.railway.app"
     ],
     methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allow_headers=["Content-Type", "Authorization"],
