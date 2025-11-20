@@ -11,7 +11,7 @@ import time
 
 app = Flask(__name__)
 
-# CORS configuration - Allow React frontend
+# CORS configuration - Allow React frontend and Railway healthcheck
 CORS(app,
     origins=[
         "http://localhost:3000",
@@ -19,7 +19,9 @@ CORS(app,
         "https://carris-plus-gp.vercel.app",
         "https://carris-plus-gp-tiosam989.vercel.app",
         "https://*.vercel.app",
-        "https://*.onrender.com"
+        "https://*.onrender.com",
+        "https://*.railway.app",
+        "https://healthcheck.railway.app"
     ],
     methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allow_headers=["Content-Type", "Authorization"],
@@ -89,11 +91,35 @@ def index():
 
 @app.route('/health')
 def health():
-    """Health check endpoint"""
-    return jsonify({
+    """
+    Health check endpoint for Railway
+    Returns 200 OK when service is ready to accept traffic
+    Railway healthcheck hostname: healthcheck.railway.app
+    """
+    health_status = {
         'status': 'healthy',
-        'service': 'CarrisPlus Backend API'
-    })
+        'service': 'CarrisPlus Backend API',
+        'port': os.getenv('PORT', '5000'),
+        'environment': os.getenv('FLASK_ENV', 'development')
+    }
+
+    # Check database connection if DATABASE_URL is set
+    if os.getenv('DATABASE_URL'):
+        try:
+            from config.database import get_db_connection
+            conn = get_db_connection()
+            conn.close()
+            health_status['database'] = 'connected'
+        except Exception as e:
+            health_status['database'] = f'error: {str(e)}'
+            health_status['status'] = 'degraded'
+            # Still return 200 for Railway healthcheck during deployment
+            # Database might not be ready yet
+    else:
+        health_status['database'] = 'not_configured'
+
+    # Return 200 status code for Railway healthcheck
+    return jsonify(health_status), 200
 
 
 @app.errorhandler(404)
