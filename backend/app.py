@@ -31,11 +31,12 @@ CORS(app,
 
 # Configuration
 app.config['SECRET_KEY'] = os.getenv('JWT_SECRET_KEY', 'your-super-secret-jwt-key-change-in-production')
-app.config['UPLOAD_FOLDER'] = os.getenv('UPLOAD_FOLDER', 'uploads')
+app.config['UPLOAD_FOLDER'] = os.getenv('UPLOAD_FOLDER') or 'uploads'  # Handle empty string
 app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024  # 5MB max file size
 
-# Ensure upload folder exists
-os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+# Ensure upload folder exists only if path is valid
+if app.config['UPLOAD_FOLDER']:
+    os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
 # Register blueprints
 app.register_blueprint(auth_bp)
