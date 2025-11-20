@@ -15,6 +15,14 @@ DB_CONFIG = {
     'cursorclass': pymysql.cursors.DictCursor
 }
 
+# Add port if specified (Railway uses custom ports)
+if os.getenv('DB_PORT'):
+    DB_CONFIG['port'] = int(os.getenv('DB_PORT'))
+
+# Add SSL for production (PlanetScale, etc)
+if os.getenv('DB_SSL', 'false').lower() == 'true':
+    DB_CONFIG['ssl'] = {'ssl_mode': 'REQUIRED'}
+
 
 def get_db_connection():
     """

@@ -17,7 +17,8 @@
       "Bash(docker ps:*)",
       "Bash(docker-compose restart:*)",
       "Bash(curl:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(git restore:*)"
     ],
     "deny": [],
     "ask": []

@@ -43,25 +43,31 @@ app.register_blueprint(auth_bp)
 def before_first_request():
     """Initialize database on first request"""
     if not hasattr(app, 'db_initialized'):
-        max_retries = 10
+        max_retries = 3
         retry_count = 0
+
+        # Skip database initialization if DATABASE_URL is not set (production without DB)
+        if not os.getenv('DATABASE_URL'):
+            print("⚠️  DATABASE_URL not set - Skipping database initialization")
+            app.db_initialized = True
+            return
 
         while retry_count < max_retries:
             try:
                 print(f"Attempting to initialize database (attempt {retry_count + 1}/{max_retries})...")
                 init_database()
                 app.db_initialized = True
-                print("Database initialized successfully!")
+                print("✅ Database initialized successfully!")
                 break
             except Exception as e:
                 retry_count += 1
-                print(f"Failed to initialize database: {e}")
+                print(f"❌ Failed to initialize database: {e}")
                 if retry_count < max_retries:
                     print(f"Retrying in 3 seconds...")
                     time.sleep(3)
                 else:
-                    print("Max retries reached. Database initialization failed.")
-                    raise
+                    print("⚠️  Max retries reached. Running without database...")
+                    app.db_initialized = True
 
 
 @app.route('/')
