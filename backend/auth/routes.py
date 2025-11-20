@@ -35,7 +35,9 @@ def register():
         500: Server error
     """
     try:
+        print("=== REGISTER REQUEST START ===")
         data = request.get_json()
+        print(f"Request data received: {data}")
 
         # Extract and sanitize inputs
         email = sanitize_input(data.get('email', '').lower().strip())
@@ -44,43 +46,64 @@ def register():
         full_name = sanitize_input(data.get('full_name', '').strip())
         phone = sanitize_input(data.get('phone', '').strip()) if data.get('phone') else None
 
+        print(f"Sanitized - Email: {email}, NIF: {nif}, Name: {full_name}, Phone: {phone}")
+
         # Validate required fields
         if not all([email, password, nif, full_name]):
+            print(f"❌ Missing required fields")
             return jsonify({
                 'error': 'Missing required fields',
                 'required': ['email', 'password', 'nif', 'full_name']
             }), 400
 
+        print("✅ All required fields present")
+
         # Validate email
         if not validate_email(email):
+            print(f"❌ Invalid email format: {email}")
             return jsonify({'error': 'Invalid email format'}), 400
+        print("✅ Email format valid")
 
         # Validate password
         is_valid_password, password_error = validate_password(password)
         if not is_valid_password:
+            print(f"❌ Password validation failed: {password_error}")
             return jsonify({'error': password_error}), 400
+        print("✅ Password valid")
 
         # Validate NIF
         is_valid_nif, nif_error = validate_nif(nif)
         if not is_valid_nif:
+            print(f"❌ NIF validation failed: {nif_error}")
             return jsonify({'error': nif_error}), 400
+        print("✅ NIF valid")
 
         # Check if user already exists
+        print(f"Checking if email exists: {email}")
         existing_user = User.get_user_by_email(email)
         if existing_user:
+            print(f"❌ Email already registered: {email}")
             return jsonify({'error': 'Email already registered'}), 409
+        print("✅ Email not registered yet")
 
         # Check if NIF already exists
+        print(f"Checking if NIF exists: {nif}")
         with get_db_cursor() as cursor:
             cursor.execute('SELECT id FROM users WHERE nif = %s', (nif,))
             if cursor.fetchone():
+                print(f"❌ NIF already registered: {nif}")
                 return jsonify({'error': 'NIF already registered'}), 409
+        print("✅ NIF not registered yet")
 
         # Create user
+        print(f"Creating user: {email}")
         user = User.create_user(email, password, nif, full_name, phone)
 
         if not user:
+            print("❌ Failed to create user in database")
             return jsonify({'error': 'Failed to create user'}), 500
+
+        print(f"✅ User created successfully with ID: {user.get('id')}")
 
         # Generate JWT token
         token = generate_token(user['id'], user['email'], user['is_admin'])
@@ -102,8 +125,10 @@ def register():
         }), 201
 
     except Exception as e:
-        print(f"Registration error: {e}")
-        return jsonify({'error': 'Internal server error'}), 500
+        print(f"❌ REGISTRATION ERROR: {str(e)}")
+        import traceback
+        print(traceback.format_exc())
+        return jsonify({'error': f'Internal server error: {str(e)}'}), 500
 
 
 @auth_bp.route('/login', methods=['POST'])
