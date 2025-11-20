@@ -134,5 +134,10 @@ def internal_error(error):
     return jsonify({'error': 'Internal server error'}), 500
 
 
+# Only run development server if explicitly running app.py locally
+# Railway will use Procfile with gunicorn instead
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    # For local development only
+    port = int(os.getenv('PORT', 5000))
+    debug = os.getenv('FLASK_ENV') != 'production'
+    app.run(host='0.0.0.0', port=port, debug=debug)
