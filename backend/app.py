@@ -49,9 +49,9 @@ def before_first_request():
         max_retries = 3
         retry_count = 0
 
-        # Skip database initialization if DATABASE_URL is not set (production without DB)
-        if not os.getenv('DATABASE_URL'):
-            print("⚠️  DATABASE_URL not set - Skipping database initialization")
+        # Skip database initialization if DB_HOST is not set (production without DB)
+        if not os.getenv('DB_HOST'):
+            print("⚠️  DB_HOST not set - Skipping database initialization")
             app.db_initialized = True
             return
 
@@ -104,13 +104,14 @@ def health():
         'environment': os.getenv('FLASK_ENV', 'development')
     }
 
-    # Check database connection if DATABASE_URL is set
-    if os.getenv('DATABASE_URL'):
+    # Check database connection if DB_HOST is set
+    if os.getenv('DB_HOST'):
         try:
             from config.database import get_db_connection
             conn = get_db_connection()
             conn.close()
             health_status['database'] = 'connected'
+            health_status['db_host'] = os.getenv('DB_HOST')
         except Exception as e:
             health_status['database'] = f'error: {str(e)}'
             health_status['status'] = 'degraded'
