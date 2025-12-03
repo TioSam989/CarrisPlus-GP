@@ -57,6 +57,9 @@ const Login = () => {
 
     return (
         <div className="auth-container">
+			<div className="auth-tudoOnline">
+				<img src="/images/tudoOnline.png" alt="tudoOnline" className="auth-tudoOnline" />
+			</div>
             <div className="auth-card">
                 <h1 className="auth-title">CarrisPlus</h1>
                 <h2 className="auth-subtitle">Login</h2>
