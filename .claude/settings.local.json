@@ -18,7 +18,8 @@
       "Bash(docker-compose restart:*)",
       "Bash(curl:*)",
       "Bash(git commit:*)",
-      "Bash(git restore:*)"
+      "Bash(git restore:*)",
+      "Bash(python -m json.tool:*)"
     ],
     "deny": [],
     "ask": []

@@ -33,6 +33,11 @@ services:
       FLASK_APP: app.py
       FLASK_ENV: development
       DATABASE_URL: mysql+pymysql://carrisplus_user:carrisplus_pass@db:3306/carrisplus
+      DB_HOST: db
+      DB_USER: carrisplus_user
+      DB_PASSWORD: carrisplus_pass
+      DB_NAME: carrisplus
+      DB_PORT: 3306
       JWT_SECRET_KEY: your-super-secret-jwt-key-change-in-production
       UPLOAD_FOLDER: /app/uploads
     volumes:
