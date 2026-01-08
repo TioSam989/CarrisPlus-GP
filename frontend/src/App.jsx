@@ -7,6 +7,8 @@ import { Provider } from 'react-redux';
 import store from './store/store';
 import Login from './components/Auth/Login';
 import Register from './components/Auth/Register';
+import ForgotPassword from './components/Auth/ForgotPassword';
+import ResetPassword from './components/Auth/ResetPassword';
 import Dashboard from './components/Dashboard';
 import PrivateRoute from './utils/PrivateRoute';
 import './App.css';
@@ -20,6 +22,8 @@ function App() {
                         {/* Public routes */}
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
+                        <Route path="/forgot-password" element={<ForgotPassword />} />
+                        <Route path="/reset-password" element={<ResetPassword />} />
 
                         {/* Protected routes */}
                         <Route

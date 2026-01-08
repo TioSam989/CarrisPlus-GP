@@ -277,6 +277,150 @@ def logout(current_user):
         return jsonify({'error': 'Internal server error'}), 500
 
 
+@auth_bp.route('/forgot-password', methods=['POST'])
+def forgot_password():
+    """
+    Request password reset
+
+    Request JSON:
+        {
+            "email": "user@example.com"
+        }
+
+    Returns:
+        200: Reset email sent (always returns success for security)
+        400: Validation error
+        500: Server error
+    """
+    try:
+        data = request.get_json()
+
+        # Extract and sanitize email
+        email = sanitize_input(data.get('email', '').lower().strip())
+
+        # Validate email
+        if not email or not validate_email(email):
+            return jsonify({'error': 'Valid email is required'}), 400
+
+        # Create reset token (always return success even if user doesn't exist for security)
+        token = User.create_password_reset_token(email)
+
+        if token:
+            # In production, send email here with reset link
+            # For now, we'll return the token in the response (NOT SECURE FOR PRODUCTION)
+            # TODO: Implement email sending
+            reset_link = f"http://localhost:3000/reset-password?token={token}"
+            print(f"Password reset link: {reset_link}")
+
+            # Log password reset request
+            user = User.get_user_by_email(email)
+            if user:
+                log_audit(user['id'], 'PASSWORD_RESET_REQUESTED', 'user', user['id'], request)
+
+        # Always return success message for security (don't reveal if email exists)
+        return jsonify({
+            'message': 'If an account exists with this email, you will receive password reset instructions.',
+            'reset_link': reset_link if token else None  # Remove this in production
+        }), 200
+
+    except Exception as e:
+        print(f"Forgot password error: {e}")
+        return jsonify({'error': 'Internal server error'}), 500
+
+
+@auth_bp.route('/reset-password', methods=['POST'])
+def reset_password():
+    """
+    Reset password using token
+
+    Request JSON:
+        {
+            "token": "reset_token_here",
+            "password": "NewSecurePass123"
+        }
+
+    Returns:
+        200: Password reset successful
+        400: Validation error
+        401: Invalid or expired token
+        500: Server error
+    """
+    try:
+        data = request.get_json()
+
+        # Extract inputs
+        token = data.get('token', '').strip()
+        password = data.get('password', '')
+
+        # Validate required fields
+        if not token or not password:
+            return jsonify({
+                'error': 'Missing required fields',
+                'required': ['token', 'password']
+            }), 400
+
+        # Validate password
+        is_valid_password, password_error = validate_password(password)
+        if not is_valid_password:
+            return jsonify({'error': password_error}), 400
+
+        # Verify token and get user
+        token_data = User.verify_reset_token(token)
+        if not token_data:
+            return jsonify({'error': 'Invalid or expired reset token'}), 401
+
+        # Reset password
+        if User.reset_password(token, password):
+            # Log password reset
+            log_audit(token_data['user_id'], 'PASSWORD_RESET_COMPLETED', 'user', token_data['user_id'], request)
+
+            return jsonify({
+                'message': 'Password has been reset successfully. You can now login with your new password.'
+            }), 200
+        else:
+            return jsonify({'error': 'Failed to reset password'}), 500
+
+    except Exception as e:
+        print(f"Reset password error: {e}")
+        return jsonify({'error': 'Internal server error'}), 500
+
+
+@auth_bp.route('/verify-reset-token', methods=['POST'])
+def verify_reset_token():
+    """
+    Verify if a reset token is valid
+
+    Request JSON:
+        {
+            "token": "reset_token_here"
+        }
+
+    Returns:
+        200: Token is valid
+        400: Validation error
+        401: Invalid or expired token
+    """
+    try:
+        data = request.get_json()
+        token = data.get('token', '').strip()
+
+        if not token:
+            return jsonify({'error': 'Token is required'}), 400
+
+        token_data = User.verify_reset_token(token)
+        if token_data:
+            return jsonify({
+                'valid': True,
+                'email': token_data['email']
+            }), 200
+        else:
+            return jsonify({'error': 'Invalid or expired reset token'}), 401
+
+    except Exception as e:
+        print(f"Verify token error: {e}")
+        return jsonify({'error': 'Internal server error'}), 500
+
+
 def log_audit(user_id, action, entity_type, entity_id, req):
     """
     Log audit event
