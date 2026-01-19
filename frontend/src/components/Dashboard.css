@@ -1,0 +1,166 @@
+.dashboard-container {
+    min-height: 100vh;
+    background-color: #FFFFFF;
+}
+
+.dashboard-header {
+    background-color: #FFDD00;
+    color: #000000;
+    padding: 24px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.dashboard-header h1 {
+    margin: 0;
+    font-size: 32px;
+    font-weight: 700;
+    color: #000000;
+}
+
+.btn-logout {
+    background-color: #000000;
+    color: #FFDD00;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+}
+
+.btn-logout:hover {
+    background-color: #4D4F53;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.dashboard-main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.welcome-card {
+    background: #FFFFFF;
+    border: 2px solid #FFDD00;
+    border-radius: 20px;
+    padding: 36px;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 16px rgba(255, 221, 0, 0.15);
+}
+
+.welcome-card h2 {
+    margin: 0 0 12px 0;
+    color: #000000;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.user-email {
+    color: #4D4F53;
+    margin: 6px 0;
+    font-size: 15px;
+}
+
+.user-nif {
+    color: #8B8D8E;
+    margin: 6px 0;
+    font-size: 14px;
+}
+
+.admin-badge {
+    display: inline-block;
+    background-color: #FFDD00;
+    color: #000000;
+    padding: 6px 16px;
+    border-radius: 30px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-top: 12px;
+    text-transform: uppercase;
+}
+
+.dashboard-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+}
+
+.dashboard-card {
+    background: #FFFFFF;
+    border: 1.5px solid #D5D6D2;
+    border-radius: 20px;
+    padding: 28px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(255, 221, 0, 0.2);
+    border-color: #FFDD00;
+}
+
+.dashboard-card h3 {
+    margin: 0 0 12px 0;
+    color: #000000;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.dashboard-card p {
+    color: #4D4F53;
+    margin: 0 0 24px 0;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.btn-card {
+    background-color: #FFDD00;
+    color: #000000;
+    border: none;
+    padding: 14px 24px;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    text-transform: uppercase;
+}
+
+.btn-card:hover:not(:disabled) {
+    background-color: #E5C800;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 221, 0, 0.4);
+}
+
+.btn-card:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #D5D6D2;
+    color: #8B8D8E;
+}
+
+@media (max-width: 768px) {
+    .dashboard-header {
+        padding: 20px 24px;
+    }
+
+    .dashboard-header h1 {
+        font-size: 26px;
+    }
+
+    .dashboard-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .welcome-card {
+        padding: 28px 24px;
+    }
+}

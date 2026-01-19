@@ -1,0 +1,124 @@
+========================================
+HOW TO CREATE REQUIREMENTS PDF
+========================================
+
+OPTION 1 - Terminal (Easiest):
+------------------------------
+Run this command:
+
+    python create_requirements_pdf.py
+
+Or:
+
+    python terminal_pdf.py
+
+
+OPTION 2 - Manual (Always Works):
+----------------------------------
+1. Run: python create_requirements_pdf.py
+   (This creates CarrisPlus_Requirements.html)
+
+2. Open CarrisPlus_Requirements.html in your browser
+
+3. Press Ctrl+P
+
+4. Select "Save as PDF"
+
+5. Click Save
+
+
+========================================
+FILES CREATED
+========================================
+
+1. REQUIREMENTS.md (29 KB)
+   - Clean requirements document
+   - Only functional and non-functional requirements
+   - Based on your actual project (Carris + AI validation)
+   - No unnecessary database details
+
+2. create_requirements_pdf.py
+   - Script to convert REQUIREMENTS.md to PDF
+   - Uses Chrome headless
+
+3. CarrisPlus_Requirements.html
+   - HTML version (will be created when you run the script)
+
+4. CarrisPlus_Requirements.pdf
+   - Final PDF (will be created when you run the script)
+
+
+========================================
+WHAT'S INCLUDED IN REQUIREMENTS.MD
+========================================
+
+✓ Project Summary (Problem + Solution)
+✓ Team Information (Davi, Iago, Ana)
+
+✓ FUNCTIONAL REQUIREMENTS:
+  - RF-001: User Registration & Authentication
+  - RF-002: Document Submission with AI Validation (OCR)
+  - RF-003: Pass Management (Create, Renew, Consult)
+  - RF-004: Admin Panel (Dashboard, Manual Review)
+  - RF-005: Email Notifications
+  - RF-006: Reports & Statistics
+
+✓ NON-FUNCTIONAL REQUIREMENTS:
+  - RNF-001: Performance (Response times, Scalability)
+  - RNF-002: Security (RGPD/GDPR, Authentication, File Security)
+  - RNF-003: Usability (Interface, Responsiveness, Accessibility)
+  - RNF-004: Maintainability (Clean Code, Tests)
+  - RNF-005: Technologies (Docker, PostgreSQL)
+  - RNF-006: Legal Compliance (RGPD, Terms of Service)
+
+✓ Technologies Stack
+✓ Requirements Prioritization
+✓ Success Criteria
+✓ Glossary
+
+
+========================================
+DIFFERENCES FROM DOCUMENTATION.MD
+========================================
+
+REMOVED:
+- Database schema details (models, relationships)
+- Extensive architecture diagrams
+- Detailed use cases
+- Testing strategy details
+- Deployment infrastructure
+- CI/CD pipelines
+- Risk analysis
+
+KEPT:
+- All functional requirements (what system does)
+- All non-functional requirements (how system performs)
+- Technology stack
+- Success criteria
+- Based on README and your project description
+
+
+========================================
+ESTIMATED PDF SIZE
+========================================
+
+Approximately 15-20 pages
+(vs 40+ pages in the full documentation)
+
+
+========================================
+NEXT STEPS
+========================================
+
+1. Run: python create_requirements_pdf.py
+
+2. If it doesn't work automatically, manually:
+   - Open CarrisPlus_Requirements.html
+   - Print to PDF
+
+3. Review the PDF
+
+4. Submit to your professor!
+
+
+========================================
