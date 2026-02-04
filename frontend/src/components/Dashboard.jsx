@@ -2,74 +2,81 @@
  * Dashboard Component
  * Main page after login
  */
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { logoutUser } from '../store/authSlice';
-import './Dashboard.css';
+import SolicitarPasse from './Dashboard/SolicitarPasse';
+import ConsultarPasse from './Dashboard/ConsultarPasse';
+import Configuracoes from './Dashboard/Configuracoes';
 
 const Dashboard = () => {
     const { user } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [activeTab, setActiveTab] = useState('solicitar');
 
     const handleLogout = async () => {
         await dispatch(logoutUser());
         navigate('/login');
     };
 
+    const tabs = [
+        { id: 'solicitar', label: 'Solicitar Passe' },
+        { id: 'consultar', label: 'Consultar Passe' },
+        { id: 'configuracoes', label: 'Configurações' }
+    ];
+
     return (
-        <div className="dashboard-container">
-            <header className="dashboard-header">
-                <h1>CarrisPlus</h1>
-                <button onClick={handleLogout} className="btn-logout">
-                    Sair
-                </button>
+        <div className="min-h-screen bg-white">
+            {/* Header */}
+            <header className="bg-carris-yellow py-4 px-6 shadow-md">
+                <div className="max-w-7xl mx-auto flex justify-between items-center">
+                    <h1 className="text-3xl font-bold">
+                        carris <span className="inline-flex items-center justify-center w-8 h-8 bg-black text-white rounded-full text-sm">id</span>
+                    </h1>
+                    <div className="flex items-center gap-4">
+                        <div className="text-right">
+                            <div className="font-bold">Olá!</div>
+                            <div className="text-sm">{user?.full_name?.split(' ')[0]?.toUpperCase()}</div>
+                        </div>
+                        <button
+                            onClick={handleLogout}
+                            className="w-10 h-10 bg-black rounded-full flex items-center justify-center hover:bg-gray-800 transition-colors"
+                            title="Sair"
+                        >
+                            <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
             </header>
 
-            <main className="dashboard-main">
-                <div className="welcome-card">
-                    <h2>Bem-vindo, {user?.full_name}!</h2>
-                    <p className="user-email">{user?.email}</p>
-                    <p className="user-nif">NIF: {user?.nif}</p>
-                    {user?.is_admin && (
-                        <span className="admin-badge">Administrador</span>
-                    )}
+            {/* Navigation Tabs */}
+            <nav className="bg-white border-b border-gray-200 py-4 px-6">
+                <div className="max-w-7xl mx-auto flex gap-4 justify-center">
+                    {tabs.map((tab) => (
+                        <button
+                            key={tab.id}
+                            onClick={() => setActiveTab(tab.id)}
+                            className={`px-8 py-3 rounded-full font-semibold transition-all ${
+                                activeTab === tab.id
+                                    ? 'bg-carris-black text-carris-yellow'
+                                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                            }`}
+                        >
+                            {tab.label}
+                        </button>
+                    ))}
                 </div>
+            </nav>
 
-                <div className="dashboard-cards">
-                    <div className="dashboard-card">
-                        <h3>Submeter Documento</h3>
-                        <p>Envie os seus documentos para validação automática</p>
-                        <button className="btn-card" disabled>
-                            Em breve
-                        </button>
-                    </div>
-
-                    <div className="dashboard-card">
-                        <h3>Criar Passe</h3>
-                        <p>Solicite um novo passe Carris</p>
-                        <button className="btn-card" disabled>
-                            Em breve
-                        </button>
-                    </div>
-
-                    <div className="dashboard-card">
-                        <h3>Meus Passes</h3>
-                        <p>Consulte os seus passes ativos</p>
-                        <button className="btn-card" disabled>
-                            Em breve
-                        </button>
-                    </div>
-
-                    <div className="dashboard-card">
-                        <h3>Histórico</h3>
-                        <p>Veja o histórico dos seus documentos</p>
-                        <button className="btn-card" disabled>
-                            Em breve
-                        </button>
-                    </div>
-                </div>
+            {/* Main Content */}
+            <main className="py-8">
+                {activeTab === 'solicitar' && <SolicitarPasse />}
+                {activeTab === 'consultar' && <ConsultarPasse />}
+                {activeTab === 'configuracoes' && <Configuracoes />}
             </main>
         </div>
     );
